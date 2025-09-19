@@ -1,0 +1,3566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galaxy Rush - Galactic Tournaments</title>
+    <!-- Google Fonts & Font Awesome for Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@400;500;700&family=Orbitron:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <style>
+        /* --- CLASSCUP GALACTIC THEME --- */
+        :root {
+            /* Base Background - Deep Space */
+            --base-bg-start: #0a0312; /* Darkest Space Blue */
+            --base-bg-mid: #1a072d;   /* Deep Purple Space */
+            --base-bg-end: #2a0c44;   /* Darker Galactic Purple */
+            --galactic-stars: #ffffff; /* Color of stars */
+            --galactic-nebula-1: rgba(0, 255, 255, 0.1); /* Cyan nebula */
+            --galactic-nebula-2: rgba(153, 51, 255, 0.1); /* Purple nebula */
+
+            /* UI Backgrounds - Translucent Galactic Panels */
+            --bg-primary-ui: rgba(26, 7, 45, 0.7); /* Darker translucent for modals/popups base */
+            --bg-secondary-ui: rgba(42, 12, 68, 0.7); /* Slightly lighter translucent for cards */
+            --bg-tertiary-ui: rgba(60, 18, 90, 0.7); /* Even lighter translucent for inputs */
+            
+            /* Text Colors - Glowing for readability on dark backgrounds */
+            --text-primary-ui: #e0e0e0; /* Light Grey for main text */
+            --text-secondary-ui: #b0b0b0; /* Muted Grey for secondary text */
+
+            /* Accent Colors (Electric Blue, Purple, Cosmic Pink for Galactic) */
+            --accent-color-1: #00FFFF; /* Electric Cyan - Primary */
+            --accent-color-2: #9933FF; /* Bright Purple - Secondary */
+            --accent-color-3: #FF00FF; /* Cosmic Pink - Tertiary (for highlights) */
+            --accent-glow: rgba(0, 255, 255, 0.5); /* Electric Cyan glow */
+
+            /* Derived colors */
+            --glow-strong: rgba(153, 51, 255, 0.6); /* Stronger Purple glow */
+            --border-color-ui: rgba(0, 255, 255, 0.3); /* Cyan translucent border */
+            --shadow-color-ui: rgba(0, 255, 255, 0.2); /* Subtle Cyan glow shadow */
+            --gradient-text: #FFFFFF; /* White text for gradient buttons */
+            --success-green: #39FF14; /* Neon Green for success */
+            --error-red: #FF3131; /* Neon Red for errors */
+            --info-blue: #00BFFF; /* Deep Sky Blue for info */
+
+            /* NEW: No black outline for most text, rely on color and weight */
+            --black-outline: none; /* Removed for lighter UI */
+        }
+
+        /* --- THEME ACCENT COLOR OVERRIDES (These only change --accent-color-1, --accent-color-2, and --accent-glow) --- */
+        /* Normal Themes - Adjusted to fit darker aesthetic */
+        body.orange-theme { --accent-color-1: #FF8C00; --accent-color-2: #FF4500; --accent-glow: rgba(255, 69, 0, 0.4); }
+        body.yellow-theme { --accent-color-1: #FFFF00; --accent-color-2: #FFD700; --accent-glow: rgba(255, 215, 0, 0.4); }
+        body.green-theme { --accent-color-1: #00FF00; --accent-color-2: #7CFC00; --accent-glow: rgba(124, 252, 0, 0.4); }
+        body.blue-theme { --accent-color-1: #00BFFF; --accent-color-2: #1E90FF; --accent-glow: rgba(30, 144, 255, 0.3); }
+        body.red-theme { --accent-color-1: #FF0000; --accent-color-2: #DC143C; --accent-glow: rgba(220, 20, 60, 0.3); }
+        
+        /* Premium Accent Themes - Adjusted for a darker base */
+        body.purple-theme { --accent-color-1: #EE82EE; --accent-color-2: #8A2BE2; --accent-glow: rgba(138, 43, 226, 0.4); }
+        body.teal-theme { --accent-color-1: #00CED1; --accent-color-2: #20B2AA; --accent-glow: rgba(32, 178, 170, 0.4); }
+        body.pink-theme { --accent-color-1: #FF1493; --accent-color-2: #FF69B4; --accent-glow: rgba(255, 105, 180, 0.4); }
+        body.cyan-theme { --accent-color-1: #40E0D0; --accent-color-2: #00FFFF; --accent-glow: rgba(0, 255, 255, 0.4); }
+        body.indigo-theme { --accent-color-1: #4B0082; --accent-color-2: #8A2BE2; --accent-glow: rgba(138, 43, 226, 0.4); }
+        body.lime-theme { --accent-color-1: #32CD32; --accent-color-2: #00FF00; --accent-glow: rgba(0, 255, 0, 0.4); }
+        body.slate-theme { --accent-color-1: #708090; --accent-color-2: #A9A9A9; --accent-glow: rgba(169, 169, 169, 0.4); }
+        body.gold-theme { --accent-color-1: #FFD700; --accent-color-2: #FFA500; --accent-glow: rgba(255, 165, 0, 0.5); }
+        body.silver-theme { --accent-color-1: #C0C0C0; --accent-color-2: #D3D3D3; --accent-glow: rgba(211, 211, 211, 0.4); }
+        body.bronze-theme { --accent-color-1: #CD7F32; --accent-color-2: #D2B48C; --accent-glow: rgba(210, 180, 140, 0.4); }
+        body.aqua-theme { --accent-color-1: #00FFFF; --accent-color-2: #7FFFD4; --accent-glow: rgba(127, 255, 212, 0.4); }
+        body.vividpink-theme { --accent-color-1: #FF007F; --accent-color-2: #FF1493; --accent-glow: rgba(255, 20, 147, 0.4); }
+        body.forest-theme { --accent-color-1: #228B22; --accent-color-2: #32CD32; --accent-glow: rgba(50, 205, 50, 0.4); }
+        body.royalblue-theme { --accent-color-1: #4169E1; --accent-color-2: #6495ED; --accent-glow: rgba(100, 149, 237, 0.4); }
+        body.violet-theme { --accent-color-1: #EE82EE; --accent-color-2: #DDA0DD; --accent-glow: rgba(221, 160, 221, 0.4); }
+        body.sunset-theme { --accent-color-1: #FF7F50; --accent-color-2: #FFA07A; --accent-glow: rgba(255, 160, 122, 0.4); }
+        body.cherry-theme { --accent-color-1: #D2042D; --accent-color-2: #E32636; --accent-glow: rgba(227, 38, 54, 0.4); }
+
+        /* --- KEYFRAMES --- */
+        @keyframes text-glow { /* Subtle text glow for a professional look */
+            0%, 100% { text-shadow: 0 0 5px var(--accent-glow); } 
+            50% { text-shadow: 0 0 8px var(--accent-glow), 0 0 15px var(--accent-color-2); }
+        }
+        @keyframes splash-glow { /* For splash screen, slightly more pronounced */
+            0%, 100% { text-shadow: 0 0 8px var(--accent-glow), 0 0 15px var(--accent-color-1); } 
+            50% { text-shadow: 0 0 12px var(--accent-glow), 0 0 25px var(--accent-color-1); } 
+        }
+        @keyframes scale-up { 0% { transform: scale(0.5); opacity: 0; } 60% { transform: scale(1.1); opacity: 1; } 100% { transform: scale(1); } }
+        @keyframes draw-check { 0% { stroke-dashoffset: 36; } 100% { stroke-dashoffset: 0; } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        @keyframes nebula-pulse { /* Pulsing nebula for background */
+            0%, 100% { opacity: 0.1; transform: scale(1); }
+            50% { opacity: 0.2; transform: scale(1.05); }
+        }
+        @keyframes stardust {
+            0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+            20% { opacity: 0.7; }
+            100% { transform: translateY(-100vh) translateX(50vw) scale(1.2); opacity: 0; }
+        }
+        
+        @keyframes pulse-glow { /* Subtle button pulse */
+            0% { box-shadow: 0 0 5px var(--accent-glow); }
+            50% { box-shadow: 0 0 10px var(--accent-glow), 0 0 15px var(--accent-color-2); }
+            100% { box-shadow: 0 0 5px var(--accent-glow); }
+        }
+        @keyframes border-pulse {
+            0%, 100% { border-color: var(--border-color-ui); }
+            50% { border-color: var(--accent-color-1); }
+        }
+        @keyframes holo-glow {
+            0%, 100% { box-shadow: 0 0 8px var(--accent-color-1), 0 0 15px var(--accent-color-2); }
+            50% { box-shadow: 0 0 12px var(--accent-color-1), 0 0 25px var(--accent-color-2); }
+        }
+
+
+        /* --- GLOBAL STYLES --- */
+        body {
+            background: linear-gradient(120deg, var(--base-bg-start), var(--base-bg-mid), var(--base-bg-end));
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            background-attachment: fixed;
+            color: var(--text-primary-ui);
+            margin: 0; padding: 0;
+            transition: color 0.5s, background 0.5s;
+            padding-bottom: 70px; /* Space for bottom nav */
+            overflow-x: hidden;
+            font-family: 'Roboto', sans-serif; /* Default, will be overridden for headings */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative; /* For nebula and star backgrounds */
+        }
+
+        /* Galactic Background Elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 80%, var(--galactic-nebula-1) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, var(--galactic-nebula-2) 0%, transparent 50%);
+            background-size: 150% 150%;
+            animation: gradientShift 30s ease infinite, nebula-pulse 15s infinite alternate;
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* Stardust Effect - multiple layers for depth */
+        .stars {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, var(--galactic-stars), rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 40px 70px, var(--galactic-stars), rgba(255,255,255,0)),
+                radial-gradient(2px 2px at 50px 160px, var(--galactic-stars), rgba(255,255,255,0)),
+                radial-gradient(1px 1px at 90px 100px, var(--galactic-stars), rgba(255,255,255,0));
+            background-size: 200px 200px;
+            animation: gradientShift 100s linear infinite;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .splash { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(135deg, var(--base-bg-start), var(--base-bg-end)); /* Dark galactic splash screen */
+            display: flex; flex-direction: column; align-items: center; 
+            transition: opacity 0.5s ease-out;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #splash-screen { z-index: 9999; }
+        
+        #splash-logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-top: 15vh;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 20px var(--accent-glow)); /* Electric glow */
+        }
+
+        #splash-text { 
+            font-family: 'Orbitron', sans-serif; font-size: 3.5rem; color: #ffffff; 
+            animation: splash-glow 2s infinite alternate; 
+            text-align: center;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--accent-glow), 0 0 20px var(--accent-color-1);
+        }
+        
+        .splash-spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid #ffffff; /* White spinner for splash screens */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin-bottom: auto;
+            box-shadow: 0 0 15px rgba(255,255,255,0.4);
+        }
+        
+        #developer-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            text-shadow: none; /* Removed outline for splash developer text */
+            animation: splash-glow 2s infinite alternate;
+            margin-top: auto;
+            margin-bottom: 40px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        /* NEW: Premium Welcome Splash Screen */
+        #premium-splash-screen {
+            background: linear-gradient(135deg, #FFD700, #c343ff, #9933FF); /* Gold to Vivid Purple to Bright Purple gradient */
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite;
+            z-index: 9998; /* Below main splash, but above content */
+        }
+
+        #premium-splash-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            color: #ffffff;
+            animation: splash-glow 2s infinite alternate;
+            text-align: center;
+            margin-top: 25vh; /* Adjusted margin */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        #premium-user-name {
+            font-family: 'Russo One', sans-serif;
+            font-size: 2.2rem;
+            color: #ffffff;
+            margin-top: 15px;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+
+        .container { 
+            max-width: 500px; 
+            margin: auto; 
+            padding: 0; 
+            display: none; /* Keep initially hidden until JS shows it */
+        }
+        h1, h2, h3 { 
+            font-family: 'Orbitron', sans-serif; /* Futuristic font for headings */
+            color: var(--text-primary-ui); 
+            text-shadow: 0 0 8px var(--accent-glow), 0 0 15px var(--accent-color-2); /* Glowing effect */
+        }
+        .page-header {
+            font-family: 'Russo One', sans-serif; /* Slightly different futuristic font for headers */
+            color: var(--text-primary-ui); 
+            text-align: center; 
+            font-size: 1.8rem;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            text-shadow: 0 0 8px var(--accent-glow), 0 0 15px var(--accent-color-2); /* Glowing effect */
+        }
+
+        /* --- Glassmorphism Effect Base (Galactic Panels) --- */
+        .glass-card {
+            background-color: var(--bg-secondary-ui);
+            backdrop-filter: blur(10px); /* Stronger blur for space effect */
+            border: 1px solid var(--border-color-ui);
+            box-shadow: 0 2px 10px var(--shadow-color-ui); /* Glowing shadow */
+            border-radius: 15px; /* Softer, futuristic corners */
+            transition: all 0.3s ease-in-out;
+        }
+        .glass-card:hover {
+            box-shadow: 0 4px 15px var(--glow-strong); /* More prominent glow on hover */
+            border-color: var(--accent-color-1); /* Accent border on hover */
+            transform: translateY(-2px);
+        }
+
+        .fullscreen-container { 
+            display: none;
+            flex-direction: column; align-items: center; justify-content: center; 
+            min-height: calc(100vh - 40px); background-color: var(--bg-primary-ui); padding: 20px; 
+            border-radius: 15px; backdrop-filter: blur(10px); margin: 20px auto; box-sizing: border-box; 
+            text-align: center; border: 1px solid var(--border-color-ui); box-shadow: 0 4px 15px var(--shadow-color-ui);
+        }
+        #server-connection-container .icon, .banned-icon, .maintenance-icon { 
+            font-size: 5rem; margin-bottom: 20px; color: var(--accent-color-1); /* Electric Cyan icons */
+            text-shadow: 0 0 15px var(--accent-glow);
+        }
+        #server-connection-container h2, #login-container h1, #review-request-container h2, #maintenance-container h2, #banned-container h2 {
+            animation: text-glow 2s infinite alternate; /* Re-added glow for emphasis */
+            color: var(--text-primary-ui);
+            font-size: 2.2rem;
+        }
+        
+        #app-container, #match-details-container, #send-money-container, #transfer-success-container, #pin-verification-container,
+         #game-matches-container, #add-money-container, #withdraw-money-container, #account-container, #my-matches-list-container,
+         #ranks-container, #my-order-container { display: none; }
+        
+        /* App Header (Galactic style) */
+        .app-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: var(--bg-primary-ui); /* Dark translucent background for header */
+            box-shadow: 0 2px 8px rgba(0,255,255,0.1); /* Subtle cyan glow */
+            margin-bottom: 5px; /* Adjust margin */
+            border-bottom: 1px solid var(--border-color-ui);
+        }
+        .app-header .logo {
+            height: 35px;
+            width: 35px;
+            object-fit: contain;
+            margin-right: 10px;
+            filter: drop-shadow(0 0 10px var(--accent-color-1));
+        }
+        .app-header .title {
+            font-family: 'Orbitron', sans-serif; /* Futuristic font */
+            font-size: 1.6rem;
+            color: var(--text-primary-ui);
+            flex-grow: 1;
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+        .app-header .balance-display {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2)); /* Gradient for balance */
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 1rem;
+            font-weight: 700;
+            box-shadow: 0 0 10px var(--accent-glow);
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            animation: pulse-glow 3s infinite ease-in-out;
+        }
+        .app-header .balance-display i {
+            color: white;
+            font-size: 0.9rem;
+            text-shadow: 0 0 5px rgba(255,255,255,0.7);
+        }
+
+        /* Announcement Banner */
+        .announcement-banner {
+            background-color: rgba(255, 255, 0, 0.2); /* Muted yellow for dark theme */
+            color: #FFFF66; /* Bright yellow text */
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            margin: 10px 15px; /* Margin to match container padding */
+            border: 1px solid rgba(255, 255, 0, 0.3);
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.3);
+            font-family: 'Russo One', sans-serif;
+            text-shadow: 0 0 5px rgba(255,255,0,0.5);
+        }
+        /* Hero Banner (Free Fire Withdrawal) */
+        .hero-banner {
+            width: calc(100% - 30px); /* Full width minus container padding */
+            margin: 10px 15px; /* Margin to match container padding */
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px var(--shadow-color-ui);
+            border: 1px solid var(--border-color-ui);
+        }
+        .hero-banner img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: brightness(0.9) contrast(1.1); /* Enhance image for dark theme */
+        }
+
+        /* Quick Action Buttons */
+        .quick-actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .quick-action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px 5px;
+            background-color: var(--bg-secondary-ui);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+            text-decoration: none;
+            color: var(--text-primary-ui);
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            font-family: 'Russo One', sans-serif;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 3px var(--accent-glow);
+        }
+        .quick-action-btn i {
+            font-size: 2rem;
+            color: var(--accent-color-2); /* Bright Purple icon color */
+            margin-bottom: 8px;
+            transition: color 0.2s ease, text-shadow 0.2s ease;
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+        .quick-action-btn:hover {
+            background-color: var(--bg-tertiary-ui);
+            box-shadow: 0 4px 15px var(--glow-strong);
+            transform: translateY(-3px) scale(1.02);
+            border-color: var(--accent-color-1);
+        }
+        .quick-action-btn:hover i {
+            color: var(--accent-color-1); /* Electric Cyan on hover */
+            text-shadow: 0 0 12px var(--accent-color-1), 0 0 20px var(--accent-glow);
+        }
+
+        /* Game Mode Cards (Holo-panels) */
+        #game-mode-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* 2x2 grid */
+            gap: 15px;
+            margin-bottom: 30px;
+            padding: 0 15px;
+        }
+        .game-mode-card {
+            background-color: var(--bg-primary-ui); /* Darker translucent background */
+            border-radius: 15px;
+            box-shadow: 0 0 15px var(--shadow-color-ui); /* Subtle glow */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-end;
+            padding-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            height: 180px;
+            border: 1px solid var(--border-color-ui);
+        }
+        .game-mode-card::before { /* Gradient overlay from bottom for holo effect */
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0) 80%);
+            z-index: 1;
+        }
+        .game-mode-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 0;
+            transition: transform 0.3s ease;
+            filter: brightness(0.8) contrast(1.2); /* Enhance for dark theme */
+        }
+        .game-mode-card .text-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            text-shadow: 0 0 8px var(--accent-glow);
+            font-family: 'Orbitron', sans-serif;
+        }
+        .game-mode-card h3 {
+            font-family: 'Russo One', sans-serif;
+            font-size: 1.2rem;
+            margin: 0;
+            text-shadow: 0 0 8px var(--accent-color-1), 0 0 15px var(--accent-color-2);
+            color: white;
+        }
+        .game-mode-card p {
+            font-size: 0.8rem;
+            margin: 5px 0 0;
+            color: rgba(255,255,255,0.8);
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+        .game-mode-card:hover {
+            box-shadow: 0 0 20px var(--glow-strong), 0 0 30px var(--accent-color-3); /* Stronger glow on hover */
+            transform: translateY(-5px) scale(1.04);
+            border-color: var(--accent-color-1);
+        }
+        .game-mode-card:hover img {
+            transform: scale(1.1);
+        }
+
+        #matches-list, #game-specific-matches-list { display: grid; gap: 15px; padding: 0 15px 20px 15px; }
+        .match-card { /* Galactic match card style */
+            display: flex; gap: 15px; align-items: stretch;
+            padding: 15px;
+            background-color: var(--bg-secondary-ui);
+            border: 1px solid var(--border-color-ui);
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        .match-card:hover {
+            box-shadow: 0 4px 15px var(--glow-strong);
+            border-color: var(--accent-color-1);
+            transform: translateY(-2px);
+        }
+        .match-card-icon {
+            width: 70px; height: 70px;
+            flex-shrink: 0; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            background-color: rgba(60, 18, 90, 0.7); /* Dark purple icon background */
+            border: 1px solid rgba(153, 51, 255, 0.3);
+            box-shadow: 0 0 8px rgba(153, 51, 255, 0.4);
+        }
+        .match-card-icon img {
+            width: 50px; height: 50px; object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--accent-color-1));
+        }
+        .match-details { flex-grow: 1; }
+        .match-details h3 { 
+            margin: 0 0 5px 0; color: var(--text-primary-ui); 
+            font-size: 1.2rem; 
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+        .match-details p { margin: 2px 0; font-size: 0.9rem; color: var(--text-secondary-ui); }
+        .match-details strong { color: var(--text-primary-ui); text-shadow: 0 0 3px var(--accent-glow); }
+        .match-card .button-group { margin-top: 10px; display: flex; gap: 8px; }
+
+        .join-button, .submit-button, .dismiss-button, .action-button { 
+            font-family: 'Russo One', sans-serif; border: none; padding: 10px 15px; 
+            border-radius: 10px; cursor: pointer; font-weight: 600; font-size: 1rem; 
+            text-align: center; transition: all 0.2s; 
+            box-shadow: 0 0 10px var(--accent-glow);
+            white-space: nowrap; /* Prevent text wrapping */
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .join-button, .submit-button, .action-button { 
+            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2)); /* Gradient button */
+            color: var(--gradient-text); 
+            border: 1px solid var(--accent-color-1);
+        }
+        .join-button:hover, .submit-button:hover, .action-button:hover { 
+            background: linear-gradient(90deg, var(--accent-color-2), var(--accent-color-1)); /* Reverse gradient on hover */
+            transform: translateY(-2px); 
+            box-shadow: 0 0 15px var(--glow-strong), 0 0 25px var(--accent-color-3); 
+            border-color: var(--accent-color-2);
+        }
+        .view-details-button { 
+            background-color: var(--bg-tertiary-ui); color: var(--text-primary-ui); 
+            border: 1px solid var(--border-color-ui); 
+            box-shadow: 0 0 8px rgba(0,255,255,0.1);
+            text-shadow: 0 0 3px var(--accent-glow);
+        }
+        .view-details-button:hover {
+            background-color: var(--bg-secondary-ui);
+            box-shadow: 0 0 12px var(--accent-glow);
+            border-color: var(--accent-color-2);
+            transform: translateY(-1px);
+        }
+        .logout-button { 
+            background-color: var(--error-red); color: white;
+            border: 1px solid var(--error-red);
+            box-shadow: 0 0 10px rgba(255, 49, 49, 0.4);
+        }
+        .logout-button:hover { 
+            background-color: #c82333;
+            transform: translateY(-1px); 
+            box-shadow: 0 0 15px rgba(255, 49, 49, 0.6);
+        }
+        
+        .details-header { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; background-color: var(--bg-primary-ui); box-shadow: 0 2px 8px rgba(0,255,255,0.1); border-bottom: 1px solid var(--border-color-ui); }
+        .details-header .page-header { margin: 0; flex-grow: 1; text-align: center; }
+        .back-button { 
+            background: none; border: none; color: var(--text-secondary-ui); font-size: 24px; cursor: pointer; 
+            text-shadow: none; /* No glow */
+            padding: 5px;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+        .back-button:hover { 
+            color: var(--accent-color-1); 
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+        .details-content { 
+            background: var(--bg-primary-ui); padding: 20px; border-radius: 15px; 
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+            margin: 15px;
+            border: 1px solid var(--border-color-ui);
+        }
+        
+        input[type="text"], input[type="number"], input[type="password"], textarea { 
+            width: 100%; padding: 12px; margin-bottom: 12px; 
+            background-color: var(--bg-tertiary-ui); border: 1px solid var(--border-color-ui); 
+            color: var(--text-primary-ui); border-radius: 10px; font-size: 1rem; 
+            box-sizing: border-box;
+            box-shadow: inset 0 1px 5px rgba(0,255,255,0.1);
+            font-family: 'Roboto', sans-serif;
+        }
+        input:focus, textarea:focus { 
+            outline: none; border-color: var(--accent-color-1); 
+            box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.3), inset 0 1px 5px rgba(0,255,255,0.2); 
+            background-color: rgba(60, 18, 90, 0.8);
+        }
+        
+        textarea { min-height: 80px; resize: vertical; }
+
+        .modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0, 0, 0, 0.85); /* Darker overlay for galactic feel */
+            backdrop-filter: blur(12px);
+            display: none; align-items: center; justify-content: center; z-index: 1000; 
+            animation: gradientShift 20s ease infinite; /* Subtle background animation for overlay */
+        }
+        .modal-content { 
+            background-color: var(--bg-primary-ui); padding: 30px; border-radius: 15px; 
+            width: 90%; max-width: 450px; 
+            position: relative; 
+            border-top: 5px solid var(--accent-color-1); /* Electric Cyan top border */
+            box-shadow: 0 5px 25px var(--glow-strong), 0 0 35px var(--accent-color-3);
+            border-left: 1px solid var(--border-color-ui);
+            border-right: 1px solid var(--border-color-ui);
+            border-bottom: 1px solid var(--border-color-ui);
+            font-family: 'Roboto', sans-serif;
+        }
+        .modal-content h2, .modal-content h3 { 
+            color: var(--text-primary-ui); margin-top: 0; 
+            text-shadow: 0 0 8px var(--accent-glow); /* Glowing headings in modals */
+            font-size: 1.8rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .close-modal { 
+            position: absolute; top: 15px; right: 20px; background: none; border: none; 
+            color: var(--text-secondary-ui); font-size: 32px; cursor: pointer; 
+            text-shadow: none;
+            transition: color 0.2s, text-shadow 0.2s;
+        }
+        .close-modal:hover { 
+            color: var(--accent-color-1); 
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+
+        #history-list { 
+            list-style-type: none; padding: 0; max-height: 180px; overflow-y: auto; 
+            margin-top: 15px; border: 1px solid var(--border-color-ui); padding: 10px; 
+            border-radius: 10px; background-color: var(--bg-secondary-ui); 
+            box-shadow: inset 0 1px 5px rgba(0,255,255,0.1);
+        }
+        #history-list li {
+            padding: 8px 0; border-bottom: 1px dashed rgba(0, 255, 255, 0.1);
+            color: var(--text-secondary-ui);
+            font-size: 0.9rem;
+        }
+        #history-list li:last-child { border-bottom: none; }
+        
+        #main-menu-modal .modal-content { text-align: center; max-height: 90vh; overflow-y: auto; }
+        #main-menu-modal hr { border: none; border-top: 1px solid rgba(0, 255, 255, 0.2); margin: 20px 0; }
+        #main-menu-modal .theme-buttons-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 15px; }
+        .theme-btn { 
+            font-family: 'Russo One', sans-serif; 
+            width: 100%; padding: 10px; border-radius: 10px; 
+            background-color: var(--bg-tertiary-ui); color: var(--text-primary-ui); 
+            font-size: 0.9rem; cursor: pointer; border: 1px solid var(--border-color-ui); 
+            transition: all 0.2s ease-in-out;
+            text-shadow: 0 0 3px var(--accent-glow);
+            text-transform: capitalize;
+        }
+        .theme-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px var(--accent-glow);
+            border-color: var(--accent-color-1);
+        }
+        .theme-btn.active {
+            border-color: var(--accent-color-1);
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2));
+            color: white;
+            box-shadow: 0 0 12px var(--accent-glow), 0 0 20px var(--accent-color-2);
+            transform: scale(1.03);
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .theme-btn:disabled {
+            opacity: 0.4; /* More transparent for disabled */
+            cursor: not-allowed;
+            filter: grayscale(80%);
+            box-shadow: none;
+            animation: none;
+            text-shadow: none;
+        }
+
+        /* Thunder ID Card (Account Screen) */
+        .thunder-id-card { /* Using this for user info on account page */
+            background-color: var(--bg-primary-ui); /* Darker translucent background */
+            border: 1px solid var(--border-color-ui);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .thunder-id-card .logo-area {
+            width: 60px; height: 60px;
+            border-radius: 10px;
+            background-color: var(--bg-secondary-ui);
+            display: flex; justify-content: center; align-items: center;
+            flex-shrink: 0;
+            margin-right: 15px;
+            border: 1px solid rgba(153, 51, 255, 0.3);
+            box-shadow: 0 0 8px rgba(153, 51, 255, 0.4);
+        }
+        .thunder-id-card .logo-area img {
+            width: 40px; height: 40px; object-fit: contain;
+            filter: drop_shadow(0 0 10px var(--accent-color-1));
+        }
+        .thunder-id-details {
+            flex-grow: 1;
+            text-align: left;
+        }
+        #main-menu-thunder-username-display { 
+            font-family: 'Russo One', sans-serif; font-size: 1.1rem; color: var(--text-primary-ui); margin: 0 0 5px 0;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+        #main-menu-thunder-id-value { 
+            font-family: 'Roboto', sans-serif; font-size: 0.9rem; color: var(--text-secondary-ui); margin: 0; word-wrap: break-word;
+        }
+        #main-menu-thunder-id-value strong { 
+            font-weight: 600; color: var(--text-primary-ui); 
+            text-shadow: 0 0 3px var(--accent-glow);
+        }
+        .premium-badge-img {
+            height: 24px;
+            width: auto;
+            vertical-align: middle;
+            margin-left: 5px;
+            display: inline-block;
+            filter: drop-shadow(0 0 8px #FFD700); /* Gold glow for premium */
+        }
+
+        /* Account Stats Grid */
+        .account-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background-color: var(--bg-primary-ui);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color-ui);
+        }
+        .account-stats-item {
+            padding: 15px 5px;
+            text-align: center;
+            border-right: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        .account-stats-item:last-child { border-right: none; }
+        .account-stats-item .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: var(--text-primary-ui);
+            margin-bottom: 5px;
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+        .account-stats-item .label {
+            font-size: 0.8rem;
+            color: var(--text-secondary-ui);
+            font-weight: 500;
+        }
+
+        /* Account Menu List */
+        .account-menu-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            background-color: var(--bg-primary-ui);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+            border: 1px solid var(--border-color-ui);
+        }
+        .account-menu-list li {
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        .account-menu-list li:last-child { border-bottom: none; }
+        .account-menu-list a, .account-menu-list .toggle-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            text-decoration: none;
+            color: var(--text-primary-ui);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+            font-family: 'Russo One', sans-serif;
+            letter-spacing: 0.5px;
+        }
+        .account-menu-list a i, .account-menu-list .toggle-item i {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            color: var(--accent-color-2); /* Bright Purple icons */
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+        .account-menu-list a .arrow, .account-menu-list .toggle-item .arrow {
+            margin-left: auto;
+            color: var(--text-secondary-ui);
+            transition: color 0.2s;
+        }
+        .account-menu-list a:hover {
+            background-color: var(--bg-secondary-ui);
+            color: var(--accent-color-1);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+        .account-menu-list a:hover i {
+             color: var(--accent-color-1);
+             text-shadow: 0 0 10px var(--accent-glow);
+        }
+        .account-menu-list a:hover .arrow {
+            color: var(--accent-color-1);
+        }
+        .toggle-switch { /* Push Notification Toggle */
+            position: relative;
+            display: inline-block;
+            width: 40px; height: 22px;
+            margin-left: auto;
+        }
+        .toggle-switch input { display: none; }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: rgba(0, 255, 255, 0.2); /* Muted Cyan */
+            transition: .4s;
+            border-radius: 22px;
+            box-shadow: inset 0 0 5px rgba(0, 255, 255, 0.2);
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px; width: 16px;
+            left: 3px; bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        input:checked + .slider { background-color: var(--accent-color-1); }
+        input:focus + .slider { box-shadow: 0 0 1px var(--accent-color-1), 0 0 8px var(--accent-glow); }
+        input:checked + .slider:before { transform: translateX(18px); background-color: var(--accent-color-3); }
+
+        /* Wallet Screen (Modal/Full Screen) */
+        #my-wallet-container .balance-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-2)); /* Electric Blue to Purple gradient */
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px var(--glow-strong);
+            border: 1px solid var(--accent-color-1);
+            position: relative;
+        }
+        #my-wallet-container .balance-section::before { /* Animated background */
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--accent-color-1), var(--accent-color-3), var(--accent-color-2));
+            background-size: 200% 200%;
+            z-index: -1;
+            border-radius: 17px;
+            filter: blur(8px);
+            animation: gradientShift 10s ease infinite alternate;
+        }
+        #my-wallet-container .balance-item {
+            flex-basis: 45%; /* Two items per row */
+            margin-bottom: 15px;
+        }
+        #my-wallet-container .balance-item:nth-child(even) { /* Adjust spacing for two items per row */
+            margin-left: 5%;
+        }
+        #my-wallet-container .balance-item:last-child { margin-bottom: 0; }
+        #my-wallet-container .balance-item .label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-bottom: 5px;
+            font-family: 'Roboto', sans-serif;
+        }
+        #my-wallet-container .balance-item .amount {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            text-shadow: 0 0 8px rgba(255,255,255,0.7), 0 0 15px var(--accent-glow);
+        }
+        #my-wallet-container .wallet-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            flex-basis: 100%;
+            position: relative;
+            z-index: 1; /* Ensure buttons are above pseudo-element */
+        }
+        #my-wallet-container .wallet-actions .action-button {
+            flex-grow: 1;
+            padding: 12px;
+            font-size: 1.1rem;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2));
+            border: 1px solid var(--accent-color-1);
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        #my-wallet-container .wallet-actions .action-button:nth-child(2) { /* WITHDRAW button */
+            background: linear-gradient(90deg, var(--accent-color-2), var(--accent-color-3));
+            border-color: var(--accent-color-2);
+        }
+        #my-wallet-container .earnings-payouts {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background-color: var(--bg-primary-ui);
+            border-radius: 15px;
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+            padding: 15px 0;
+            border: 1px solid var(--border-color-ui);
+        }
+        #my-wallet-container .earnings-payouts div {
+            text-align: center;
+            flex: 1;
+            border-right: 1px solid rgba(0, 255, 255, 0.1);
+        }
+        #my-wallet-container .earnings-payouts div:last-child { border-right: none; }
+        #my-wallet-container .earnings-payouts .value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--text-primary-ui);
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+        #my-wallet-container .earnings-payouts .label {
+            font-size: 0.85rem;
+            color: var(--text-secondary-ui);
+        }
+        #my-wallet-container .history-section h3 {
+            margin-bottom: 10px;
+            font-family: 'Russo One', sans-serif;
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+        #my-wallet-container #history-list {
+            max-height: 250px;
+        }
+
+        /* Withdraw Money screen */
+        #withdraw-money-container .withdrawal-options {
+            text-align: left;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+        #withdraw-money-container .withdrawal-options label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: var(--text-primary-ui);
+            cursor: pointer;
+            text-shadow: 0 0 2px var(--accent-glow);
+        }
+        #withdraw-money-container .withdrawal-options input[type="radio"] {
+            margin-right: 10px;
+            accent-color: var(--accent-color-1); /* Color radio button */
+        }
+        #withdraw-money-container .withdrawal-message {
+            font-size: 0.9rem;
+            color: var(--text-secondary-ui);
+            margin-top: 20px;
+            text-shadow: 0 0 1px var(--accent-glow);
+        }
+        #withdraw-money-container .withdraw-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            background: linear-gradient(90deg, var(--accent-color-2), var(--accent-color-3)); /* Purple to Pink withdraw button */
+            color: white;
+            border: 1px solid var(--accent-color-2);
+            box-shadow: 0 0 10px rgba(153, 51, 255, 0.4);
+        }
+        #withdraw-money-container .withdraw-button:hover {
+            background: linear-gradient(90deg, var(--accent-color-3), var(--accent-color-2)); /* Reverse gradient on hover */
+            box-shadow: 0 0 15px var(--glow-strong);
+            border-color: var(--accent-color-3);
+        }
+        
+        /* Add Money screen */
+        #add-money-container .add-money-method {
+            text-align: left;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            font-family: 'Roboto', sans-serif;
+        }
+        #add-money-container .add-money-method label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1rem;
+            color: var(--text-primary-ui);
+            cursor: pointer;
+            text-shadow: 0 0 2px var(--accent-glow);
+        }
+        #add-money-container .add-money-method input[type="radio"] {
+            margin-right: 10px;
+            accent-color: var(--accent-color-1);
+        }
+        #add-money-container .add-money-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            background: linear-gradient(90deg, var(--accent-color-1), var(--accent-color-2)); /* Cyan to Purple for Add Money button */
+            color: white;
+            border: 1px solid var(--accent-color-1);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
+        }
+        #add-money-container .add-money-button:hover {
+            background: linear-gradient(90deg, var(--accent-color-2), var(--accent-color-1));
+            box-shadow: 0 0 15px var(--glow-strong);
+            border-color: var(--accent-color-2);
+        }
+        #qrcode-display {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px dashed var(--border-color-ui);
+            border-radius: 10px;
+            background-color: var(--bg-secondary-ui);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+        #qrcode-image {
+            width: 180px;
+            height: 180px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--accent-color-1));
+        }
+        #qrcode-instructions {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-secondary-ui);
+            text-align: center;
+            text-shadow: 0 0 2px var(--accent-glow);
+        }
+        #add-money-submit-payment {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1rem;
+            background-color: var(--success-green);
+            color: white;
+            border: 1px solid var(--success-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
+        }
+        #add-money-submit-payment:hover {
+            background-color: #218838;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.6);
+        }
+
+
+        /* Server Info Layout */
+        .server-info-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 10px; background-color: var(--bg-secondary-ui); padding: 12px 15px;
+            border-radius: 15px; border: 1px solid var(--border-color-ui);
+            box-shadow: 0 1px 10px var(--shadow-color-ui);
+            margin-bottom: 15px;
+            font-family: 'Russo One', sans-serif;
+            text-shadow: 0 0 3px var(--accent-glow);
+        }
+        .server-info-bar p { margin: 0; color: var(--text-secondary-ui); text-align: left; font-size: 0.9rem; }
+        .server-info-bar strong { color: var(--text-primary-ui); text-shadow: 0 0 5px var(--accent-glow); }
+        .server-info-bar .button-group button {
+            padding: 8px 12px; font-size: 0.8rem; border-radius: 10px;
+            font-family: 'Russo One', sans-serif;
+            box-shadow: 0 1px 8px var(--shadow-color-ui);
+            text-transform: capitalize;
+            text-shadow: 0 0 3px rgba(0,0,0,0.5);
+        }
+
+        .success-icon-container { width: 100px; height: 100px; margin-bottom: 20px; }
+        .success-icon-container .animated-check { animation: scale-up 0.5s ease-out forwards; }
+        .success-icon-container .animated-check__circle { stroke: var(--success-green); }
+        .success-icon-container .animated-check__check { stroke: var(--success-green); stroke-dasharray: 36; stroke-dashoffset: 36; animation: draw-check 0.4s 0.1s ease-out forwards; }
+        
+        .server-item { 
+            background-color: var(--bg-primary-ui); padding: 15px; border-radius: 15px; 
+            margin-bottom: 12px; font-family: 'Russo One', sans-serif; font-size: 1.1rem; 
+            cursor: pointer; transition: all 0.2s ease; text-align: left; 
+            border-left: 5px solid var(--border-color-ui); /* Subtle border */
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+            text-shadow: 0 0 3px var(--accent-glow);
+        }
+        .server-item:hover { 
+            background-color: var(--bg-secondary-ui); transform: translateY(-3px) scale(1.02); 
+            border-left-color: var(--accent-color-1); /* Electric Cyan hover border */
+            box-shadow: 0 4px 15px var(--glow-strong);
+        }
+        .server-item span { font-weight: 600; color: var(--text-primary-ui); display: block;}
+        .server-item small {
+            display: block; font-weight: 500; font-size: 0.8rem; 
+            color: var(--text-secondary-ui);
+            margin-top: 2px;
+        }
+        .server-item small.status-online { color: var(--success-green); text-shadow: 0 0 5px rgba(57, 255, 20, 0.5); }
+        .server-item small.status-offline { color: var(--error-red); text-shadow: 0 0 5px rgba(255, 49, 49, 0.5); }
+        .server-item small.unlimited-badge { color: var(--info-blue); text-shadow: 0 0 5px rgba(0, 191, 255, 0.5); }
+
+
+        /* NEW: Bottom Navigation Bar (Galactic style) */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            display: none;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 0;
+            background: var(--bg-primary-ui); /* Dark translucent background */
+            border-top: 1px solid var(--border-color-ui);
+            box-shadow: 0 -2px 15px var(--shadow-color-ui);
+            z-index: 1000;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary-ui); /* Muted grey for inactive */
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            padding: 5px 0;
+            flex-grow: 1;
+            max-width: 120px;
+            text-shadow: none;
+            text-transform: uppercase;
+            font-family: 'Russo One', sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .bottom-nav-item i {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+            color: var(--text-secondary-ui); /* Muted grey for inactive icons */
+            transition: all 0.2s ease;
+            text-shadow: none;
+        }
+
+        .bottom-nav-item.active,
+        .bottom-nav-item:hover {
+            color: var(--accent-color-1); /* Electric Cyan for active/hover text */
+            text-shadow: 0 0 8px var(--accent-glow);
+            transform: translateY(-3px) scale(1.05);
+        }
+        .bottom-nav-item.active i,
+        .bottom-nav-item:hover i {
+            color: var(--accent-color-1); /* Electric Cyan for active/hover icons */
+            text-shadow: 0 0 10px var(--accent-glow), 0 0 18px var(--accent-color-2);
+        }
+        
+        /* Premium welcome modal */
+        #premium-welcome-modal .modal-content {
+            border-image-source: linear-gradient(to right, var(--accent-color-1), var(--accent-color-2));
+            text-align: center;
+        }
+        #premium-welcome-modal h2 {
+            color: var(--accent-color-1);
+            animation: text-glow 2s infinite alternate;
+        }
+        #premium-welcome-modal p {
+            color: var(--text-primary-ui);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 2px var(--accent-glow);
+        }
+
+        /* Ad container styling */
+        #ad-container {
+            margin: 20px auto;
+            max-width: 320px;
+            min-height: 50px;
+            background-color: var(--bg-secondary-ui);
+            border: 1px dashed var(--border-color-ui);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-secondary-ui);
+            font-size: 0.9rem;
+            text-align: center;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 0 10px var(--shadow-color-ui);
+            font-family: 'Russo One', sans-serif;
+        }
+        #ad-container.hidden {
+            display: none;
+        }
+
+        /* Gift Box Modal specific styles */
+        #gift-box-modal .modal-content {
+            text-align: center;
+            background-color: var(--bg-primary-ui);
+        }
+
+        #gift-box-modal .gift-image-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 20px auto;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            border-radius: 15px;
+            box-shadow: 0 0 15px var(--accent-color-1);
+            border: 1px solid var(--border-color-ui);
+        }
+        #gift-box-modal .gift-image-container:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 25px var(--accent-color-1), 0 0 35px var(--accent-color-2);
+        }
+
+        #gift-box-modal .gift-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px var(--accent-color-1));
+        }
+
+        #gift-box-modal .gift-image-container.claimed {
+            cursor: default;
+            animation: none;
+            filter: grayscale(80%) brightness(0.6);
+            opacity: 0.7;
+            box-shadow: 0 0 5px var(--text-secondary-ui);
+        }
+
+        #gift-box-modal .claimed-amount-display {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: var(--success-green);
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.7), 0 0 20px rgba(57, 255, 20, 0.4); 
+            margin-top: 15px;
+            display: none;
+            animation: splash-glow 2s infinite alternate; /* Re-using splash glow for excitement */
+        }
+        .form-switcher {
+            margin-top: 15px;
+            font-size: 0.9rem;
+            color: var(--text-secondary-ui);
+            font-family: 'Roboto', sans-serif;
+        }
+        .form-switcher a {
+            color: var(--accent-color-1);
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--accent-glow);
+            transition: all 0.2s ease;
+        }
+        .form-switcher a:hover {
+            text-decoration: underline;
+            color: var(--accent-color-2);
+            text-shadow: 0 0 8px var(--glow-strong);
+        }
+        /* Common form padding and border for light theme */
+        #login-container .glass-card,
+        #server-login-container .glass-card,
+        #review-request-container .glass-card {
+            padding: 25px;
+            background-color: var(--bg-primary-ui);
+            border: 1px solid var(--border-color-ui);
+            box-shadow: 0 2px 10px var(--shadow-color-ui);
+        }
+
+        /* NEW: Ranks List Styling for Mobile */
+        #ranks-list {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+        }
+        .rank-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-secondary-ui);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 8px var(--shadow-color-ui);
+            font-weight: 500;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            font-family: 'Roboto', sans-serif;
+        }
+        .rank-item.top3 {
+            background: linear-gradient(45deg, var(--accent-color-1) 0%, var(--accent-color-2) 100%);
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 0 15px var(--glow-strong), 0 0 25px var(--accent-color-3);
+            border: 1px solid var(--accent-color-1);
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+            animation: holo-glow 3s infinite alternate;
+        }
+        .rank-item.top3 .rank-number, .rank-item.top3 .rank-username, .rank-item.top3 .rank-balance {
+            color: white;
+            text-shadow: 0 0 8px rgba(255,255,255,0.7);
+        }
+        .rank-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            width: 30px;
+            text-align: center;
+            margin-right: 15px;
+            color: var(--text-primary-ui);
+            flex-shrink: 0; /* Prevent it from shrinking */
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+        /* START: Mobile-friendly adjustments for rank details */
+        .rank-details-group { /* Group for username and balance */
+            display: flex;
+            flex-direction: column; /* Stack username and balance vertically */
+            flex-grow: 1; /* Allow group to take available space */
+            align-items: flex-start; /* Align text to the left */
+        }
+        .rank-username {
+            font-size: 1.05rem;
+            color: var(--text-primary-ui);
+            word-break: break-word; /* Allow long usernames to wrap */
+            line-height: 1.2; /* Better spacing for wrapped text */
+            font-family: 'Russo One', sans-serif;
+            text-shadow: 0 0 3px var(--accent-glow);
+        }
+        .rank-balance {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.0rem; /* Slightly smaller for mobile readability */
+            color: var(--accent-color-1);
+            margin-top: 2px; /* Small space between username and balance */
+            text-shadow: 0 0 5px var(--accent-glow);
+        }
+        /* END: Mobile-friendly adjustments for rank details */
+    </style>
+</head>
+<body>
+
+<!-- Galactic Stars -->
+<div class="stars"></div>
+
+<!-- Audio elements for background music and click sounds -->
+<audio id="background-music" src="01.mp3" loop preload="auto"></audio>
+<audio id="click-sound" src="click.mp3" preload="auto"></audio>
+
+<!-- Splash Screen: Displays during initial app loading. -->
+<div id="splash-screen" class="splash">
+    <img src="icon.png" alt="Galaxy Rush Logo" id="splash-logo">
+    <div id="splash-text">Galaxy Rush</div>
+    <div class="splash-spinner"></div>
+    <div id="developer-text">Developer: Sunny Kumar</div>
+</div>
+
+<!-- NEW: Premium Welcome Splash Screen -->
+<div id="premium-splash-screen" class="splash" style="display: none;">
+    <div id="premium-splash-text">Welcome</div>
+    <div id="premium-user-name"></div> <!-- Name will be inserted by JS -->
+    <div class="splash-spinner"></div>
+</div>
+
+
+<div class="container">
+    <!-- Server Connection Screen: Shown when no server is connected. -->
+    <div id="server-connection-container" class="fullscreen-container glass-card">
+        <div class="icon"><i class="fa-solid fa-tower-broadcast"></i></div>
+        <!-- UPDATED: Title and message for server connection status -->
+        <h2 id="server-connection-title">Server Disconnected</h2>
+        <p id="server-connection-message" style="color:var(--text-secondary-ui); text-shadow:none;">You are not connected to any active server. Please connect to proceed.</p>
+        <button id="server-connection-button" class="action-button" onclick="showServerList()">Connect to Server</button>
+    </div>
+
+    <!-- Server List Screen: Displays available servers to connect to. -->
+    <div id="server-list-container">
+        <div class="details-header">
+            <button class="back-button" onclick="handleFullLogout()"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 class="page-header">Activate Server</h2>
+            <div style="width: 40px;"></div>
+        </div>
+        <div style="display: flex; justify-content: center; padding: 0 15px;">
+            <ul id="server-list" style="width: 100%; padding: 0;"></ul>
+        </div>
+    </div>
+    
+    <!-- Server Login Screen: For entering server-specific password and activation code. -->
+    <div id="server-login-container">
+         <div class="details-header">
+            <button class="back-button" onclick="showServerList()"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 id="server-login-title" class="page-header">Connect to Server</h2>
+            <div style="width: 40px;"></div>
+        </div>
+        <form id="server-login-form" onsubmit="event.preventDefault(); handleServerConnect();" class="glass-card" style="margin: 15px;">
+            <input type="password" id="server-password" placeholder="Server Password" required>
+            <input type="text" id="server-activation-code" placeholder="Server Activation Code" required>
+            <button type="submit" class="action-button">Connect</button>
+        </form>
+    </div>
+
+    <!-- Login/Sign Up Section: Allows users to log in or create a new account. -->
+    <div id="login-container" class="fullscreen-container glass-card">
+        <h1 id="form-title">Login</h1>
+        <form id="login-form" onsubmit="event.preventDefault(); handleLogin();">
+            <input type="text" id="login-username" placeholder="Enter your @username" required>
+            <input type="password" id="login-password" placeholder="Enter your password" required>
+            <button type="submit" class="action-button">Login</button>
+            <p class="form-switcher">Don't have an account? <a href="#" onclick="showSignUpForm(event)">Sign Up</a></p>
+        </form>
+        <form id="signup-form" style="display: none;" onsubmit="event.preventDefault(); handleSignUp();">
+            <input type="text" id="signup-name" placeholder="Enter your full name" required>
+            <input type="text" id="signup-username" placeholder="Choose your @username" required>
+            <input type="password" id="signup-password" placeholder="Create a password" required>
+            <input type="number" id="signup-pin" placeholder="Create a 4-digit Thunder PIN" required>
+            <button type="submit" class="action-button">Sign Up</button>
+            <p class="form-switcher">Already have an account? <a href="#" onclick="showLoginForm(event)">Login</a></p>
+        </form>
+    </div>
+
+    <!-- Banned Screen: Displayed when a user's account is suspended. -->
+    <div id="banned-container" class="fullscreen-container glass-card">
+        <div class="icon"><i class="fa-solid fa-lock"></i></div>
+        <h2>Account Suspended</h2>
+        <p style="color:var(--text-secondary-ui); text-shadow:none;">Your account has been banned by an administrator. Please contact support for assistance.</p>
+        <button class="action-button" onclick="showReviewRequestForm()">Request a Review</button>
+        <button class="logout-button" onclick="handleFullLogout()">Back to Login</button>
+    </div>
+    
+    <!-- Review Request Screen: Allows a banned user to send a review request. -->
+    <div id="review-request-container" class="fullscreen-container glass-card">
+        <div class="icon"><i class="fa-solid fa-file-signature"></i></div>
+        <h2>Request Account Review</h2>
+        <p style="color:var(--text-secondary-ui); text-shadow:none;">Please type a message explaining why your account should be reviewed. This is optional.</p>
+        <form id="review-request-form" onsubmit="event.preventDefault(); sendReviewRequest();" class="glass-card" style="margin: 15px;">
+            <textarea id="review-message" placeholder="Type your message here... (optional)"></textarea>
+            <button type="submit" class="action-button">Send Request</button>
+            <button type="button" class="logout-button" onclick="handleFullLogout()">Cancel & Go to Login</button>
+        </form>
+    </div>
+
+    <!-- Maintenance Screen: Shown when the app is under maintenance. -->
+    <div id="maintenance-container" class="fullscreen-container glass-card">
+        <div class="icon"><i class="fa-solid fa-person-digging"></i></div>
+        <h2>Under Maintenance</h2>
+        <p style="color:var(--text-secondary-ui); text-shadow:none;">The app is currently undergoing maintenance. Please check back later. For any problems, contact admin.</p>
+    </div>
+
+    <!-- Main App Section (Home Screen): The primary dashboard after login. -->
+    <div id="app-container">
+        <div class="app-header">
+            <!-- UPDATED: Logo next to Galaxy Rush -->
+            <img src="icon.png" alt="Galaxy Rush Logo" class="logo">
+            <div class="title">Galaxy Rush</div>
+            <div class="balance-display" onclick="openWalletModal()">
+                <i class="fa-solid fa-coins"></i> <span id="header-balance-display">₹0.00</span>
+            </div>
+        </div>
+        
+        <div class="announcement-banner" id="announcement-banner">
+            Announcement: PLEASE READ ALL THE RULES ONCE
+        </div>
+
+        <div class="hero-banner">
+            <!-- UPDATED: Free Fire withdrawal banner image -->
+            <img src="ffbanner.png" alt="Free Fire Withdrawal Banner">
+        </div>
+
+        <div class="quick-actions-grid">
+            <button class="quick-action-btn" onclick="showMyMatches()">
+                <i class="fa-solid fa-gamepad"></i>
+                <span>My Matches</span>
+            </button>
+            <button class="quick-action-btn" onclick="openWalletModal()">
+                <i class="fa-solid fa-wallet"></i>
+                <span>Wallet</span>
+            </button>
+            <button class="quick-action-btn" onclick="showRanks()">
+                <i class="fa-solid fa-ranking-star"></i>
+                <span>Ranks</span>
+            </button>
+            <button class="quick-action-btn" onclick="showSupportPage()"> <!-- Changed to call showSupportPage -->
+                <i class="fa-solid fa-headset"></i>
+                <span>Support</span>
+            </button>
+        </div>
+
+        <!-- NEW: Live Matches Title and Game Buttons Grid -->
+        <h2 class="page-header">Live Matches</h2>
+        <main>
+            <!-- Game Mode Cards: These will be dynamically loaded by JS for 'File Work', 'FREE Fire', 'Ludo', 'Mystery Box' -->
+            <div id="game-mode-cards-grid">
+                <!-- Example Card Structure: -->
+                <!-- <button class="game-mode-card" onclick="showGameMatches('filework', 'File Work')">
+                    <img src="wa3.png" alt="File Work"> // Corrected path
+                    <div class="text-content">
+                        <h3>File Work</h3>
+                        <p>Earn by Tasks</p>
+                    </div>
+                </button> -->
+            </div>
+        </main>
+        
+        <!-- Ad Container for normal users: Displays advertisements if the user is not premium. -->
+        <div id="ad-container" class="hidden">
+            <!-- Ads will be dynamically loaded here by JavaScript if the user is not premium -->
+            <p>Advertisement</p>
+        </div>
+    </div>
+
+    <!-- Game Specific Matches Section: Displays matches for a selected game mode. -->
+    <div id="game-matches-container">
+        <div class="details-header">
+            <button class="back-button" onclick="showScreen('app-container')"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 id="game-matches-title" class="page-header"></h2> <!-- Dynamic Title -->
+            <div style="width: 40px;"></div>
+        </div>
+        <div id="game-specific-matches-list"></div>
+    </div>
+
+    <!-- My Matches List Container -->
+    <div id="my-matches-list-container">
+        <div class="details-header">
+            <button class="back-button" onclick="showScreen('app-container')"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 class="page-header">My Matches</h2>
+            <div style="width: 40px;"></div>
+        </div>
+        <div id="my-joined-matches-list" class="details-content glass-card" style="margin: 15px;">
+            <p style="text-align: center; color: var(--text-secondary-ui);">Loading your joined matches...</p>
+        </div>
+    </div>
+
+    <!-- Ranks Container - UPDATED CONTENT -->
+    <div id="ranks-container">
+        <div class="details-header">
+            <button class="back-button" onclick="showScreen('app-container')"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 class="page-header">Top Players (Balance)</h2>
+            <div style="width: 40px;"></div>
+        </div>
+        <div class="details-content glass-card" style="margin: 15px;">
+            <ul id="ranks-list">
+                <!-- Ranks will be dynamically loaded here by JS -->
+                <p style="text-align:center; color: var(--text-secondary-ui);">Loading ranks...</p>
+            </ul>
+        </div>
+    </div>
+
+    <!-- My Order Container -->
+    <div id="my-order-container" class="fullscreen-container glass-card">
+        <div class="icon"><i class="fa-solid fa-box"></i></div>
+        <h2>My Order</h2>
+        <p style="color:var(--text-secondary-ui); text-shadow:none;">This section will show your past orders and purchases.</p>
+        <button class="action-button" onclick="showAccountScreen()">Back to Account</button>
+    </div>
+
+    <!-- Profile Page (now Contact Us page, accessed via Account Screen's My Profile or Homepage Support) - UPDATED CONTENT -->
+    <div id="profile-page-container">
+        <div class="details-header"> 
+            <button class="back-button" onclick="showAccountScreen()"><i class="fa-solid fa-arrow-left"></i></button> 
+            <h2 class="page-header">Contact Us</h2> 
+            <div style="width: 40px;"></div> 
+        </div>
+        <div class="details-content glass-card" style="padding: 20px; margin: 15px;">
+            <h3 style="margin-top: 10px; font-family: 'Russo One', sans-serif; text-shadow: 0 0 5px var(--accent-glow);">Change Password</h3>
+            <form id="change-password-form" onsubmit="event.preventDefault(); handleChangePassword();">
+                <input type="password" id="old-password" placeholder="Old Password" required>
+                <input type="password" id="new-password" placeholder="New Password" required>
+                <input type="password" id="confirm-new-password" placeholder="Confirm New Password" required>
+                <button type="submit" class="action-button" style="width: 100%;">Update Password</button>
+            </form>
+
+            <h3 style="margin-top: 30px; font-family: 'Russo One', sans-serif; text-shadow: 0 0 5px var(--accent-glow);">Support</h3>
+            <p style="text-align: center; font-size: 0.95rem; color: var(--text-secondary-ui); text-shadow:none;">
+                For support or inquiries, please reach out to us on Telegram:
+                <br>
+                <!-- UPDATED: Telegram ID for support -->
+                <a id="telegram-link" href="https://t.me/Support859564" target="_blank" style="color: var(--accent-color-1); text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; font-family: 'Russo One', sans-serif;">
+                    <i class="fab fa-telegram-plane"></i> <span id="telegram-id-display">@Support859564</span>
+                </a>
+            </p>
+        </div>
+    </div>
+
+
+    <!-- Match Details Container: Displays specific details of a chosen match. -->
+    <div id="match-details-container">
+         <div class="details-header"> <button class="back-button" onclick="goBackFromMatchDetails()"><i class="fa-solid fa-arrow-left"></i></button> <h2 id="details-title" class="page-header">Match Details</h2> <div style="width: 40px;"></div> </div>
+        <div class="details-content glass-card" style="margin: 15px;"> 
+            <p style="color:var(--text-secondary-ui);"><strong>Time:</strong> <span id="details-time" style="color:var(--text-primary-ui);"></span></p> 
+            <p style="color:var(--text-secondary-ui);"><strong>Prize Pool:</strong> <span id="details-prize" style="color:var(--text-primary-ui);"></span></p> 
+            <p style="color:var(--text-secondary-ui);"><strong>Entry Fee:</strong> <span id="details-entry" style="color:var(--text-primary-ui);"></span></p> 
+            <p style="color:var(--text-secondary-ui);"><strong id="details-uid-label">Your Game ID:</strong> <span id="details-uid" style="color:var(--text-primary-ui);"></span></p> 
+            <button id="finish-match-btn" class="action-button" style="width: 100%;" onclick="handleFinishMatch()">Finish Match</button> 
+        </div>
+    </div>
+    <!-- Send Money Container: Allows users to send money to other Thunder IDs. -->
+    <div id="send-money-container">
+        <div class="details-header"> <button class="back-button" onclick="showScreen('app-container')"><i class="fa-solid fa-arrow-left"></i></button> <h2 class="page-header">Send to Thunder ID</h2> <div style="width: 40px;"></div> </div>
+        <div id="send-money-thunder-id-form" class="glass-card" style="margin: 15px;"> 
+            <input type="text" id="thunder-id-recipient" placeholder="Enter recipient's Thunder ID" required> 
+            <input type="number" id="thunder-id-amount" placeholder="Enter amount" required> 
+            <button class="action-button" style="width: 100%;" onclick="handleSendByThunderId()">Submit</button> 
+        </div>
+    </div>
+    <!-- PIN Verification Container: For confirming transactions with a Thunder PIN. -->
+    <div id="pin-verification-container" class="fullscreen-container glass-card">
+        <h2 class="page-header" style="font-size: 2.5rem; animation: text-glow 2s infinite alternate;">Enter Your PIN</h2> 
+        <input type="password" id="thunder-pin-input" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" placeholder="****" maxlength="4" style="text-align:center; font-size: 2rem; letter-spacing: 1rem; max-width: 200px; margin-bottom: 30px;"> 
+        <button class="action-button" style="width: 100%; max-width: 200px;" onclick="handlePinVerification()">Send Payment</button> 
+        <button class="logout-button" style="margin-top: 10px; width: 100%; max-width: 200px;" onclick="cancelPinVerification()">Cancel</button>
+    </div>
+    <!-- Transfer Success Container: Confirms a successful money transfer. -->
+    <div id="transfer-success-container" class="fullscreen-container glass-card">
+        <div class="success-icon-container">
+            <svg class="animated-check" viewBox="0 0 52 52"> <circle class="animated-check__circle" cx="26" cy="26" r="25" fill="none"/> <path class="animated-check__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/> </svg>
+        </div>
+        <h2>Transfer Successful!</h2>
+        <button class="action-button go-home-btn" onclick="showScreen('app-container')">Go to Home</button>
+    </div>
+
+    <!-- Account Screen -->
+    <div id="account-container">
+        <div class="details-header">
+            <button class="back-button" onclick="showScreen('app-container')"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 class="page-header">Account</h2>
+            <div style="width: 40px;"></div>
+        </div>
+        <div class="details-content glass-card" style="margin: 15px;">
+            <div class="thunder-id-card">
+                <div class="logo-area">
+                    <img src="icon.png" alt="User Icon" id="account-user-icon">
+                </div>
+                <div class="thunder-id-details">
+                    <p id="main-menu-thunder-username-display">Username: <span id="account-username-display">@sunnyk09856</span></p>
+                    <p id="main-menu-thunder-id-value">Balance: <strong id="account-balance-display">₹1.00</strong></p>
+                </div>
+            </div>
+
+            <div class="account-stats-grid">
+                <div class="account-stats-item">
+                    <div class="value" id="stats-matches-played">0</div>
+                    <div class="label">Matches Played</div>
+                </div>
+                <div class="account-stats-item">
+                    <div class="value" id="stats-total-killed">0</div>
+                    <div class="label">Total Killed</div>
+                </div>
+                <div class="account-stats-item">
+                    <div class="value" id="stats-amount-won">0</div>
+                    <div class="label">Amount Won</div>
+                </div>
+            </div>
+
+            <ul class="account-menu-list">
+                <li><a href="#" onclick="showProfilePage()"><i class="fa-solid fa-user"></i> My Profile <span class="arrow"><i class="fa-solid fa-angle-right"></i></span></a></li>
+                <li><a href="#" onclick="openWalletModal()"><i class="fa-solid fa-wallet"></i> My Wallet <span class="arrow"><i class="fa-solid fa-angle-right"></i></span></a></li>
+                <li><a href="#" onclick="showMyMatches()"><i class="fa-solid fa-gamepad"></i> My Matches <span class="arrow"><i class="fa-solid fa-angle-right"></i></span></a></li>
+                <li><a href="#" onclick="showMyOrder()"><i class="fa-solid fa-box"></i> My Order <span class="arrow"><i class="fa-solid fa-angle-right"></i></span></a></li>
+                <li><button class="logout-button" style="width: 100%; background-color: transparent; color: var(--error-red); text-align: left; padding: 15px; border-radius: 0;" onclick="handleFullLogout()"><i class="fa-solid fa-right-from-bracket" style="margin-right: 15px;"></i> Logout</button></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- My Wallet Full Screen -->
+    <div id="my-wallet-container">
+        <div class="details-header">
+            <button class="back-button" onclick="showScreen('app-container')"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 class="page-header">My Wallet</h2>
+            <div style="width: 40px;"></div>
+        </div>
+        <div class="details-content glass-card" style="margin: 15px;">
+            <div class="balance-section">
+                <div class="balance-item">
+                    <div class="label">TOTAL BALANCE</div>
+                    <div class="amount" id="total-balance-display">₹0.00</div>
+                </div>
+                <div class="balance-item">
+                    <div class="label">WIN MONEY</div>
+                    <div class="amount" id="win-money-display">₹0.00</div>
+                </div>
+                 <div class="balance-item">
+                    <div class="label">JOIN MONEY</div>
+                    <div class="amount" id="join-money-display">₹0.00</div>
+                </div>
+                <div class="wallet-actions">
+                    <button class="action-button" onclick="showAddMoneyPage()">ADD</button>
+                    <button class="action-button" style="background-color: var(--accent-color-2);" onclick="showWithdrawMoneyPage()">WITHDRAW</button>
+                </div>
+            </div>
+
+            <div class="earnings-payouts">
+                <div>
+                    <div class="value" id="earnings-display">₹0</div>
+                    <div class="label">Earnings</div>
+                </div>
+                <div>
+                    <div class="value" id="payouts-display">₹0</div>
+                    <div class="label">Payouts</div>
+                </div>
+            </div>
+
+            <div class="history-section">
+                <h3 class="page-header" style="font-size: 1.2rem;">WALLET HISTORY</h3>
+                <ul id="history-list"><li>No history found.</li></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Money Screen -->
+    <div id="withdraw-money-container">
+        <div class="details-header">
+            <button class="back-button" onclick="showMyWalletScreen()"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 class="page-header">Withdraw Money</h2>
+            <div style="width: 40px;"></div>
+        </div>
+        <div class="details-content glass-card" style="margin: 15px;">
+            <form id="withdraw-form" onsubmit="event.preventDefault(); handleWithdraw(event);">
+                <input type="text" id="upi-id-input" placeholder="UPI ID" required>
+                <input type="number" id="withdraw-amount" placeholder="Amount" min="1" required>
+                <div class="withdrawal-options">
+                    <label><input type="radio" name="withdraw-method" value="upi" checked> UPI</label>
+                    <label><input type="radio" name="withdraw-method" value="paytm"> PAYTM</label>
+                    <label><input type="radio" name="withdraw-method" value="phonepe"> PHONEPE</label>
+                    <label><input type="radio" name="withdraw-method" value="googleplay"> GOOGLE PLAY REDEEM CODE</label>
+                </div>
+                <button type="submit" class="withdraw-button">WITHDRAW MONEY</button>
+                <p class="withdrawal-message">You can only withdraw win money.</p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Money Screen -->
+    <div id="add-money-container">
+        <div class="details-header">
+            <button class="back-button" onclick="showMyWalletScreen()"><i class="fa-solid fa-arrow-left"></i></button>
+            <h2 class="page-header">Add Money</h2>
+            <div style="width: 40px;"></div>
+        </div>
+        <div class="details-content glass-card" style="margin: 15px;">
+            <form id="add-money-form" onsubmit="event.preventDefault(); initiateAddMoney();">
+                <input type="number" id="add-money-amount" placeholder="Amount" min="1" required>
+                <div class="add-money-method">
+                    <label><input type="radio" name="add-method" value="speedpe" checked> Speedpe</label>
+                </div>
+                <button type="submit" class="add-money-button">ADD MONEY</button>
+            </form>
+            <div id="qr-payment-section" style="display: none;">
+                <div id="qrcode-display">
+                    <img id="qrcode-image" src="" alt="UPI QR Code">
+                </div>
+                <p id="qrcode-instructions" style="text-align: center;">Scan this QR code to complete payment. Please note down the Transaction ID.</p>
+                <button class="action-button" id="add-money-submit-payment" onclick="submitAddMoneyRequest()">Payment Submitted</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modals -->
+<!-- Main Menu Modal - Renamed to Theme selection, less prominent -->
+<div id="main-menu-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal(event, 'main-menu-modal')">×</button>
+        
+        <div class="server-info-bar">
+            <p>Server: <strong id="connected-server-name">...</strong></p>
+            <div class="button-group">
+                <button class="view-details-button" onclick="closeModal(event, 'main-menu-modal'); showServerList()">Switch</button>
+                <button class="logout-button" onclick="closeModal(event, 'main-menu-modal'); disconnectFromServer()">Exit</button>
+            </div>
+        </div>
+        
+        <hr>
+        
+        <h3 style="text-align: center;">Change Accent Theme</h3>
+        <div class="theme-buttons-grid">
+            <button class="theme-btn active" style="border-color:var(--accent-color-1); background-color: var(--accent-color-1); color: white;" onclick="changeTheme('thunderclash')">Galaxy Rush</button>
+            <button class="theme-btn" style="border-color:#ff6d00" onclick="changeTheme('orange')">Orange</button>
+            <button class="theme-btn" style="border-color:#ffc107" onclick="changeTheme('yellow')">Yellow</button>
+            <button class="theme-btn" style="border-color:#4CAF50" onclick="changeTheme('green')">Green</button>
+            <button class="theme-btn" style="border-color:#007bff" onclick="changeTheme('blue')">Blue</button>
+            <button class="theme-btn" style="border-color:#f44336" onclick="changeTheme('red')">Red</button>
+            <!-- PREMIUM ACCENT THEMES -->
+            <button class="theme-btn" style="border-color:#9C27B0" onclick="changeTheme('purple')" data-premium-only="true">Purple</button>
+            <button class="theme-btn" style="border-color:#009688" onclick="changeTheme('teal')" data-premium-only="true">Teal</button>
+            <button class="theme-btn" style="border-color:#E91E63" onclick="changeTheme('pink')" data-premium-only="true">Pink</button>
+            <button class="theme-btn" style="border-color:#00BCD4" onclick="changeTheme('cyan')" data-premium-only="true">Cyan</button>
+            <button class="theme-btn" style="border-color:#3F51B5" onclick="changeTheme('indigo')" data-premium-only="true">Indigo</button>
+            <button class="theme-btn" style="border-color:#CDDC39" onclick="changeTheme('lime')" data-premium-only="true">Lime</button>
+            <button class="theme-btn" style="border-color:#607D8B" onclick="changeTheme('slate')" data-premium-only="true">Slate</button>
+            <button class="theme-btn" style="border-color:#FFD700" onclick="changeTheme('gold')" data-premium-only="true">Gold</button>
+            <button class="theme-btn" style="border-color:#C0C0C0" onclick="changeTheme('silver')" data-premium-only="true">Silver</button>
+            <button class="theme-btn" style="border-color:#CD7F32" onclick="changeTheme('bronze')" data-premium-only="true">Bronze</button>
+            <button class="theme-btn" style="border-color:#00FFFF" onclick="changeTheme('aqua')" data-premium-only="true">Aqua</button>
+            <button class="theme-btn" style="border-color:#FF007F" onclick="changeTheme('vividpink')" data-premium-only="true">Vivid Pink</button>
+            <button class="theme-btn" style="border-color:#228B22" onclick="changeTheme('forest')" data-premium-only="true">Forest</button>
+            <button class="theme-btn" style="border-color:#4169E1" onclick="changeTheme('royalblue')" data-premium-only="true">Royal Blue</button>
+            <button class="theme-btn" style="border-color:#EE82EE" onclick="changeTheme('violet')" data-premium-only="true">Violet</button>
+            <button class="theme-btn" style="border-color:#FF7F50" onclick="changeTheme('sunset')" data-premium-only="true">Sunset</button>
+            <button class="theme-btn" style="border-color:#D2042D" onclick="changeTheme('cherry')" data-premium-only="true">Cherry</button>
+        </div>
+        <hr>
+        <button class="action-button" style="margin-top: 10px; width: 100%;" onclick="closeModal(event, 'main-menu-modal')">Close Menu</button>
+    </div>
+</div>
+<!-- Notice Modal: Displays administrative announcements to the user. -->
+<div id="notice-modal" class="modal-overlay">
+    <div class="modal-content"> <button class="close-modal" onclick="closeModal(event, 'notice-modal')">×</button> <h2><i class="fa-solid fa-envelope-open-text"></i> Admin Notice</h2> <p id="notice-message-content">No new notices.</p> <button class="action-button" onclick="deleteNotice()">Dismiss and Delete</button> </div>
+</div>
+
+<!-- Premium Welcome Modal: Welcomes new premium users. -->
+<div id="premium-welcome-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal(event, 'premium-welcome-modal')">×</button>
+        <h2>🎉 Congratulations! 🎉</h2>
+        <p>You are now a **PREMIUM** user!</p>
+        <p>Enjoy exclusive themes and an ad-free experience.</p>
+        <button class="action-button" onclick="closeModal(event, 'premium-welcome-modal')">Awesome!</button>
+    </div>
+</div>
+
+<!-- Gift Box Modal: Allows users to claim random gifts. -->
+<div id="gift-box-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal(event, 'gift-box-modal')">×</button>
+        <h2>🎁 You've Received a Gift! 🎁</h2>
+        <p class="gift-message" id="gift-message-text">Click the box to reveal your surprise!</p>
+        <div class="gift-image-container" onclick="claimGift()">
+            <img src="gift.png" alt="Gift Box" id="gift-box-image">
+        </div>
+        <p class="claimed-amount-display" id="claimed-gift-amount"></p>
+        <button class="action-button" style="margin-top: 20px;" onclick="closeModal(event, 'gift-box-modal');">Close</button>
+    </div>
+</div>
+
+
+<!-- Bottom Navigation Bar: Provides quick access to main sections like Play and Account. -->
+<nav class="bottom-nav">
+    <a href="#" class="bottom-nav-item active" onclick="showScreen('app-container'); activateBottomNavItem(this);">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>Play</span>
+    </a>
+    <a href="#" class="bottom-nav-item" onclick="showAccountScreen(); activateBottomNavItem(this);">
+        <i class="fa-solid fa-user"></i>
+        <span>Account</span>
+    </a>
+</nav>
+
+
+<!-- Firebase SDK, QR Lib -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+
+<script>
+    const firebaseConfig = {
+  apiKey: "AIzaSyBO9EX3l2NZ9HLl9lShWkQBM3xYD7yLry8",
+  authDomain: "galaxy-rush-50a2f.firebaseapp.com",
+  databaseURL: "https://galaxy-rush-50a2f-default-rtdb.firebaseio.com",
+  projectId: "galaxy-rush-50a2f",
+  storageBucket: "galaxy-rush-50a2f.firebasestorage.app",
+  messagingSenderId: "506817747167",
+  appId: "1:506817747167:web:63a3d0ee9429d33c2e716a"
+};
+    
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    const backgroundMusic = document.getElementById('background-music');
+    backgroundMusic.volume = 0.7; // Set background music volume to 70%
+
+    let musicStarted = false;
+    function startBackgroundMusic() {
+        if (!musicStarted) {
+            backgroundMusic.play().then(() => {
+                musicStarted = true;
+                document.body.removeEventListener('click', startBackgroundMusic, { once: true });
+            }).catch(error => {
+                console.log("Background music autoplay was prevented. Waiting for user interaction.");
+                document.body.addEventListener('click', startBackgroundMusic, { once: true });
+            });
+        }
+    }
+
+    function playClickSound() {
+        const clickSound = document.getElementById('click-sound');
+        if (clickSound) {
+            clickSound.currentTime = 0;
+            clickSound.play().catch(error => {});
+        }
+    }
+    document.addEventListener('click', playClickSound);
+
+    let currentUser = null;
+    let currentMatchData = null;
+    let pendingTransferData = null;
+    let currentNotice = null;
+    let noticeAlreadyShown = false;
+    let selectedServerId = null;
+    let serverStatusListener = null;
+    let isUnlimitedBalanceMode = false;
+    let isCurrentUserPremium = false; // NEW: Track premium status
+    let maintenanceCheckInterval = null; // To store the interval for maintenance checks
+    let previousScreen = 'app-container'; // Keep track of the previous screen for back navigation
+
+    let currentGiftId = null; // NEW: Stores the ID of the current pending gift
+    let currentGiftData = null; // NEW: Stores the data of the current pending gift
+    let currentAddMoneyAmount = 0; // Stores the amount for pending add money request
+
+    // Variables to store active Firebase listeners for efficient management
+    let matchesListener = null;
+    let userBalanceListener = null; // For the main user balance and transactions
+    let userNoticeListener = null; // For user specific notices
+
+
+    const screens = [
+        'login-container', 'banned-container', 'app-container', 
+        'match-details-container', 'send-money-container', 'transfer-success-container', 
+        'pin-verification-container', 'maintenance-container',
+        'server-connection-container', 'server-list-container', 'server-login-container',
+        'review-request-container', 'profile-page-container', 'game-matches-container',
+        'account-container', 'my-matches-list-container', 'ranks-container', 'my-order-container',
+        'my-wallet-container', 'add-money-container', 'withdraw-money-container'
+    ];
+    // List of classes for accent themes
+    const THEME_CLASSES = [
+        'orange-theme', 'yellow-theme', 'blue-theme', 'red-theme', 'green-theme', 'purple-theme', 
+        'teal-theme', 'pink-theme', 'cyan-theme', 'indigo-theme', 'lime-theme', 'slate-theme',
+        'gold-theme', 'silver-theme', 'bronze-theme', 'aqua-theme', 'vividpink-theme', 
+        'forest-theme', 'royalblue-theme', 'violet-theme', 'sunset-theme', 'cherry-theme',
+        'thunderclash-theme' /* New default theme class (renamed to Galaxy Rush logic) */
+    ];
+
+    // List of premium themes (these affect accent colors, not overall mode)
+    const PREMIUM_THEMES = [
+        'purple', 'teal', 'pink', 'cyan', 'indigo', 'lime', 'slate',
+        'gold', 'silver', 'bronze', 'aqua', 'vividpink', 'forest', 'royalblue', 'violet', 'sunset', 'cherry'
+    ];
+
+    // List of themes allowed for non-premium users
+    const ALLOWED_NORMAL_THEMES = ['thunderclash', 'orange', 'yellow', 'green', 'blue', 'red'];
+
+    // NEW: Define game mode data for the homepage buttons
+    const HOME_PAGE_GAME_BUTTONS_DATA = [
+        { id: 'filework', name: 'File Work', subtitle: 'Earn by Tasks', img: 'wa3.png' },
+        { id: 'freefire', name: 'FREE Fire', subtitle: 'Battle Royale', img: 'free1.png' },
+        { id: 'ludo', name: 'Ludo', subtitle: 'Classic Board Game', img: 'ludo2.png' },
+        { id: 'mysterybox', name: 'Mystery Box', subtitle: 'Unlock Rewards', img: 'mb4.png' }
+    ];
+
+
+    // --- Utility Functions ---
+    /**
+     * Hides all known screens and displays only the specified one.
+     * Manages visibility of the bottom navigation bar.
+     * @param {string} screenId - The ID of the screen element to display.
+     */
+    function showScreen(screenId) {
+        // Hide all screens
+        screens.forEach(id => {
+            const screen = document.getElementById(id);
+            if (screen) {
+                screen.style.display = 'none';
+            }
+        });
+
+        // Show the specified screen
+        const targetScreen = document.getElementById(screenId);
+        if (targetScreen) {
+            targetScreen.style.display = 'flex'; // Use flex for fullscreen-containers, block for others if needed
+            // Special handling for app-container which needs 'block' if it's not a fullscreen-container
+            if (screenId === 'app-container' || screenId === 'game-matches-container' || screenId === 'profile-page-container' || screenId === 'account-container' || screenId === 'my-matches-list-container' || screenId === 'ranks-container' || screenId === 'my-wallet-container' || screenId === 'add-money-container' || screenId === 'withdraw-money-container' || screenId === 'server-list-container' || screenId === 'server-login-container') {
+                targetScreen.style.display = 'block';
+            }
+        }
+        
+        // Manage bottom navigation visibility
+        const bottomNav = document.querySelector('.bottom-nav');
+        if (screenId === 'app-container' || screenId === 'account-container') {
+            bottomNav.style.display = 'flex';
+        } else {
+            bottomNav.style.display = 'none';
+        }
+    }
+
+    /**
+     * Opens a modal by setting its display style to 'flex'.
+     * @param {Event} event - The click event that triggered the modal opening.
+     * @param {string} modalId - The ID of the modal element to open.
+     */
+    function openModal(event, modalId) {
+        if(event) event.stopPropagation();
+        const modal = document.getElementById(modalId);
+        if(modal) modal.style.display = 'flex';
+    }
+
+    /**
+     * Closes a modal by setting its display style to 'none'.
+     * This function is typically called when the close button is clicked or outside the modal.
+     * @param {Event} event - The event that triggered the modal closing (e.g., click, keydown).
+     * @param {string} modalId - The ID of the modal element to close.
+     */
+    function closeModal(event, modalId) { 
+        if (event && (event.key === 'Escape' || event.target.classList.contains('close-modal') || event.target.id === modalId)) { 
+            const modal = document.getElementById(modalId); 
+            if(modal) modal.style.display = 'none'; 
+        } 
+    }
+    // --- End Utility Functions ---
+
+
+    /**
+     * Initializes the app after the splash screen fades out.
+     * Handles splash screen fade-out and initial setup logic.
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+        const splashScreen = document.getElementById('splash-screen');
+        const bottomNav = document.querySelector('.bottom-nav');
+
+        // Initially hide the main container and bottom nav until the app determines which screen to show
+        document.querySelector('.container').style.display = 'none'; 
+        if (bottomNav) bottomNav.style.display = 'none';
+
+        setTimeout(() => {
+            splashScreen.style.opacity = '0'; 
+            setTimeout(() => {
+                splashScreen.style.display = 'none';
+                initialAppSetup(); // Call initialAppSetup after splash screen fades
+                startBackgroundMusic(); 
+            }, 500); // 0.5s for fade out
+        }, 2000); // 2 seconds visible duration
+    });
+    
+    /**
+     * Activates a specific item in the bottom navigation bar.
+     * Removes 'active' class from all items and adds it to the provided element.
+     * @param {HTMLElement} element - The navigation item element to activate.
+     */
+    function activateBottomNavItem(element) {
+        document.querySelectorAll('.bottom-nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        if (element) {
+            element.classList.add('active');
+        }
+    }
+
+    /**
+     * Checks the maintenance status of the app from Firebase config.
+     * Displays a maintenance screen if active.
+     * @returns {Promise<boolean>} - True if maintenance is active, false otherwise.
+     */
+    async function checkMaintenanceStatus() {
+        try {
+            const configRef = db.ref('config');
+            const configSnapshot = await configRef.once('value');
+            const config = configSnapshot.val() || {};
+            const isManualMaintenanceOn = config.isMaintenanceMode || false;
+            const scheduledMaintenance = config.scheduledMaintenance;
+            const now = Date.now();
+
+            if (isManualMaintenanceOn) {
+                showScreen('maintenance-container'); // Show maintenance screen directly
+                return true;
+            }
+
+            if (scheduledMaintenance && scheduledMaintenance.startTime && scheduledMaintenance.endTime) {
+                const startTime = scheduledMaintenance.startTime;
+                const endTime = scheduledMaintenance.endTime;
+
+                if (now >= startTime && now <= endTime) {
+                    showScreen('maintenance-container'); // Show maintenance screen directly
+                    return true;
+                }
+            }
+            return false;
+        } catch (error) {
+            console.error("Error checking maintenance status:", error);
+            return false; 
+        }
+    }
+
+    /**
+     * Completes the login process after successful authentication and server connection.
+     * Sets current user, server, checks premium status, applies theme, and loads user data.
+     * @param {string} loggedInUsername - The username of the logged-in user.
+     * @param {string} currentServerId - The ID of the currently connected server.
+     */
+    async function finalizeLoginSuccess(loggedInUsername, currentServerId) {
+        currentUser = loggedInUsername;
+        selectedServerId = currentServerId;
+
+        try {
+            const serverSnapshot = await db.ref(`servers/${currentServerId}`).once('value');
+            if (!serverSnapshot.exists() || serverSnapshot.val().status !== 'online') {
+                localStorage.removeItem('connectedServerId');
+                alert('The server is no longer online. Please connect to a new one.');
+                handleFullLogout(); 
+                showScreen('server-connection-container');
+                return;
+            }
+            const serverData = serverSnapshot.val();
+            isUnlimitedBalanceMode = serverData.unlimitedBalance === true;
+
+            db.ref(`servers/${currentServerId}/connectedUsers/${currentUser}`).set(true);
+
+            const userSnapshot = await db.ref('users/' + currentUser).once('value');
+            const userData = userSnapshot.val();
+            if (userData.isBanned) {
+                localStorage.setItem('bannedUsername', currentUser);
+                showBannedScreen();
+                return;
+            }
+            isCurrentUserPremium = (userData.isPremium && userData.premiumExpiry > Date.now());
+            const savedTheme = userData.theme || localStorage.getItem('theme') || 'thunderclash'; // Default to Galaxy Rush logic
+            applyTheme(savedTheme);
+
+            // NEW: Premium User Welcome Splash Logic
+            if (isCurrentUserPremium) {
+                const premiumSplash = document.getElementById('premium-splash-screen');
+                const premiumUserNameEl = document.getElementById('premium-user-name');
+                
+                premiumUserNameEl.innerText = userData.name || currentUser; // Use stored name, fallback to username
+                premiumSplash.style.display = 'flex';
+
+                setTimeout(() => {
+                    premiumSplash.style.opacity = '0';
+                    setTimeout(async () => {
+                        premiumSplash.style.display = 'none';
+                        premiumSplash.style.opacity = '1'; // Reset for next time
+                        
+                        showScreen('app-container');
+                        await loadUserData();
+                        renderHomePageGameButtons();
+                        document.querySelector('.bottom-nav').style.display = 'flex';
+                        activateBottomNavItem(document.querySelector('.bottom-nav-item:nth-child(1)'));
+                        
+                        if (!userData.premiumNotified) {
+                            openModal(null, 'premium-welcome-modal');
+                            db.ref('users/' + currentUser + '/premiumNotified').set(true);
+                        }
+                    }, 500); // Fade out duration
+                }, 2500); // Splash visible duration
+            } else {
+                // Standard flow for non-premium users
+                showScreen('app-container');
+                await loadUserData();
+                renderHomePageGameButtons();
+                document.querySelector('.bottom-nav').style.display = 'flex';
+                activateBottomNavItem(document.querySelector('.bottom-nav-item:nth-child(1)'));
+            }
+
+            detachServerListener(); // Ensure any old listener is removed
+            const serverRef = db.ref(`servers/${currentServerId}`);
+            serverStatusListener = serverRef.on('value', (liveSnapshot) => {
+                if (!liveSnapshot.exists() || liveSnapshot.val().status !== 'online') {
+                    detachServerListener();
+                    alert('You have been disconnected from the server.');
+                    disconnectFromServer(false);
+                }
+            }, (error) => {
+                console.error("Error in live server listener:", error);
+                detachServerListener();
+                alert('Server connection lost due to an error. Please reconnect.');
+                disconnectFromServer(false);
+            });
+        } catch (error) {
+            console.error("Error finalizing login:", error);
+            alert("An error occurred during app setup. Please try again.");
+            handleFullLogout();
+            showScreen('server-connection-container');
+        }
+    }
+
+    /**
+     * Attempts to auto-login and connect to a server based on stored local data.
+     * Handles scenarios where no user/server data is found, leading to respective screens.
+     */
+    async function attemptAutoLoginAndServerConnect() {
+        const username = localStorage.getItem('username');
+        const connectedServerId = localStorage.getItem('connectedServerId');
+
+        if (username && connectedServerId) {
+            try {
+                // First, quickly check if server is online
+                const serverSnapshot = await db.ref(`servers/${connectedServerId}`).once('value');
+                if (!serverSnapshot.exists() || serverSnapshot.val().status !== 'online') {
+                    localStorage.removeItem('connectedServerId');
+                    alert('Your previously connected server is offline or invalid. Please connect to a server.');
+                    showScreen('server-connection-container'); 
+                    return;
+                }
+                await finalizeLoginSuccess(username, connectedServerId); 
+            } catch (error) {
+                console.error("Error during auto-login/server connect:", error);
+                alert("An error occurred during startup. Please try connecting or logging in manually.");
+                handleFullLogout();
+                showScreen('server-connection-container'); 
+            }
+        } else if (connectedServerId) { // Server ID exists, but no username (e.g., user logged out but server still remembered)
+            try {
+                const serverSnapshot = await db.ref(`servers/${connectedServerId}`).once('value');
+                if (!serverSnapshot.exists() || serverSnapshot.val().status !== 'online') {
+                    localStorage.removeItem('connectedServerId');
+                    alert('Your previously connected server is offline or invalid. Please connect to a server.');
+                    showScreen('server-connection-container');
+                } else {
+                    showScreen('login-container'); 
+                }
+            } catch (error) {
+                console.error("Error checking server status before login:", error);
+                alert("Error checking server status. Please try connecting to a server.");
+                showScreen('server-connection-container'); 
+            }
+        } else { // No connected server, or no username
+            showScreen('server-connection-container'); 
+        }
+
+        // Common modal setup (kept here as it's needed regardless of initial screen)
+        document.querySelectorAll('.modal-overlay').forEach(modal => modal.addEventListener('click', (e) => closeModal(e, e.target.id)));
+        document.querySelectorAll('.modal-content').forEach(content => content.addEventListener('click', (e) => e.stopPropagation()));
+        document.addEventListener('keydown', (event) => { if (event.key === 'Escape') { document.querySelectorAll('.modal-overlay').forEach(modal => { if (modal.style.display === 'flex') closeModal(event, modal.id); }); } });
+    }
+
+    /**
+     * Orchestrates the initial app setup, including maintenance checks and auto-login attempts.
+     */
+    async function initialAppSetup() {
+        // Ensure the main container is visible now that the splash screen is gone.
+        document.querySelector('.container').style.display = 'block';
+        document.querySelector('.bottom-nav').style.display = 'none';
+
+        let maintenanceActive = false;
+        try {
+            maintenanceActive = await checkMaintenanceStatus();
+        } catch (error) {
+            console.error("Error during initial maintenance check:", error);
+        }
+
+        if (maintenanceActive) {
+            // Maintenance screen is already shown by checkMaintenanceStatus()
+            if (!maintenanceCheckInterval) {
+                maintenanceCheckInterval = setInterval(async () => {
+                    const stillMaintenance = await checkMaintenanceStatus();
+                    if (!stillMaintenance) {
+                        clearInterval(maintenanceCheckInterval);
+                        maintenanceCheckInterval = null;
+                        attemptAutoLoginAndServerConnect(); // Maintenance over, proceed
+                    }
+                }, 60 * 1000); // Check every minute
+            }
+            return; // Exit if maintenance is active
+        }
+        
+        // If no maintenance, proceed with streamlined app flow
+        attemptAutoLoginAndServerConnect();
+
+        // Also start interval to catch if maintenance is scheduled/activated later
+        if (!maintenanceCheckInterval) {
+            maintenanceCheckInterval = setInterval(checkMaintenanceStatus, 60 * 1000); // Check every minute
+        }
+    }
+
+    /**
+     * Detaches the Firebase listener for server status.
+     * Prevents memory leaks and ensures listeners are clean when a server is disconnected.
+     */
+    function detachServerListener() {
+        if (serverStatusListener) {
+            const serverId = localStorage.getItem('connectedServerId');
+            if (serverId) { db.ref(`servers/${serverId}`).off('value', serverStatusListener); }
+            serverStatusListener = null;
+        }
+    }
+
+    /**
+     * Applies a given theme to the body of the document.
+     * Manages CSS classes and custom properties for theme colors.
+     * @param {string} themeName - The name of the theme to apply.
+     */
+    function applyTheme(themeName) {
+        document.body.classList.remove(...THEME_CLASSES);
+        if (themeName === 'thunderclash') { // Mapped to Galaxy Rush default style
+            document.body.classList.add('thunderclash-theme');
+            document.body.style.setProperty('--accent-color-1', '#00FFFF'); /* Electric Cyan */
+            document.body.style.setProperty('--accent-color-2', '#9933FF'); /* Bright Purple */
+            document.body.style.setProperty('--accent-glow', 'rgba(0, 255, 255, 0.5)'); /* Electric Cyan glow */
+        } else {
+            document.body.classList.add(themeName + '-theme');
+            document.body.style.removeProperty('--accent-color-1');
+            document.body.style.removeProperty('--accent-color-2');
+            document.body.style.removeProperty('--accent-glow');
+        }
+    }
+    
+    /**
+     * Checks if a given theme is a premium-only theme.
+     * @param {string} themeName - The name of the theme to check.
+     * @returns {boolean} - True if it's a premium theme, false otherwise.
+     */
+    function isPremiumTheme(themeName) {
+        return PREMIUM_THEMES.includes(themeName);
+    }
+
+    /**
+     * Changes the current theme of the application.
+     * Applies theme, saves to local storage and Firebase, and updates theme buttons.
+     * @param {string} themeName - The name of the theme to switch to.
+     */
+    function changeTheme(themeName) {
+        if (isPremiumTheme(themeName) && !isCurrentUserPremium) {
+            alert('This theme is for premium users only!');
+            return;
+        }
+        if (!isCurrentUserPremium && !ALLOWED_NORMAL_THEMES.includes(themeName)) {
+             alert('This theme is not available for normal users!');
+             return;
+        }
+
+        applyTheme(themeName);
+        localStorage.setItem('theme', themeName);
+        if (currentUser) {
+            db.ref('users/' + currentUser + '/theme').set(themeName);
+        }
+
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.classList.remove('active');
+            const btnThemeNameMatch = btn.onclick.toString().match(/changeTheme\('(\w+)'\)/);
+            if (btnThemeNameMatch && btnThemeNameMatch[1] === themeName) {
+                btn.classList.add('active');
+            }
+        });
+    }
+
+    /**
+     * Detaches all active Firebase listeners to prevent memory leaks.
+     * Called during logout or server disconnection.
+     */
+    function detachAllListeners() {
+        detachServerListener();
+        detachUserDataListeners();
+        detachMatchesListener();
+    }
+    
+    /**
+     * Handles a full logout from the application, including server disconnection and clearing user data.
+     */
+    function handleFullLogout() {
+        const serverId = localStorage.getItem('connectedServerId');
+        const username = localStorage.getItem('username'); 
+
+        if (serverId && username) { 
+            db.ref(`servers/${serverId}/connectedUsers/${username}`).remove(); 
+        }
+        
+        localStorage.removeItem('username');
+        localStorage.removeItem('connectedServerId');
+        localStorage.removeItem('theme');
+        localStorage.removeItem('bannedUsername'); 
+
+        isCurrentUserPremium = false; 
+        currentUser = null;
+        document.body.className = ''; 
+        applyTheme('thunderclash'); // Default to Galaxy Rush style on logout
+        
+        detachAllListeners();
+
+        document.querySelector('.bottom-nav').style.display = 'none';
+        showScreen('server-connection-container');
+    }
+
+    /**
+     * Handles a partial logout, only logging out the current user but keeping the server connection if any.
+     * @param {Event} event - The event that triggered the logout.
+     */
+    function handleLogout(event) {
+        if(event) event.stopPropagation();
+        const serverId = localStorage.getItem('connectedServerId');
+        const username = localStorage.getItem('username');
+        if (serverId && username) { db.ref(`servers/${serverId}/connectedUsers/${username}`).remove(); }
+        currentUser = null;
+        localStorage.removeItem('username');
+        document.body.className = ''; 
+        applyTheme('thunderclash'); // Default to Galaxy Rush style on logout
+        isCurrentUserPremium = false; 
+
+        detachAllListeners();
+        
+        document.querySelector('.bottom-nav').style.display = 'none';
+        showScreen('login-container');
+    }
+    
+    /**
+     * Handles user login with username and password.
+     */
+    async function handleLogin() {
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value;
+
+        if (!username || !password) {
+            alert('Please enter both username and password.');
+            return;
+        }
+        
+        const connectedServerId = localStorage.getItem('connectedServerId');
+        if (!connectedServerId) {
+            alert('Please connect to a server first.');
+            showScreen('server-connection-container');
+            return;
+        }
+
+        try {
+            const userSnapshot = await db.ref('users/' + username).once('value');
+            if (userSnapshot.exists()) {
+                const userData = userSnapshot.val();
+                if (userData.password === password) {
+                    if (userData.isBanned) {
+                        localStorage.setItem('bannedUsername', username);
+                        showBannedScreen();
+                        return;
+                    }
+                    localStorage.setItem('username', username);
+                    await finalizeLoginSuccess(username, connectedServerId);
+                    alert('Login successful!');
+                } else {
+                    alert('Incorrect password.');
+                }
+            } else {
+                alert('User not found. Please sign up or check your username.');
+            }
+        } catch (error) {
+            console.error("Login error:", error);
+            alert("An error occurred during login. Please try again.");
+        }
+    }
+
+    /**
+     * Handles user registration with name, username, password, and PIN.
+     */
+    async function handleSignUp() {
+        const name = document.getElementById('signup-name').value.trim();
+        const username = document.getElementById('signup-username').value.trim();
+        const password = document.getElementById('signup-password').value;
+        const pin = document.getElementById('signup-pin').value;
+
+        if (!name || !username || !password || !pin) {
+            alert('Please fill in all fields.');
+            return;
+        }
+        if (username.length < 3) {
+            alert('Username must be at least 3 characters long.');
+            return;
+        }
+        if (password.length < 6) {
+            alert('Password must be at least 6 characters long.');
+            return;
+        }
+        if (!/^\d{4}$/.test(pin)) {
+            alert('PIN must be a 4-digit number.');
+            return;
+        }
+
+        const connectedServerId = localStorage.getItem('connectedServerId');
+        if (!connectedServerId) {
+            alert('Please connect to a server first.');
+            showScreen('server-connection-container');
+            return;
+        }
+
+        try {
+            const userSnapshot = await db.ref('users/' + username).once('value');
+            if (userSnapshot.exists()) {
+                alert('Username already exists. Please choose a different one.');
+                return;
+            }
+
+            const newUser = {
+                name: name,
+                username: username, // Store the chosen username
+                password: password,
+                thunderPin: pin,
+                balance: 0,
+                winMoney: 0,
+                joinMoney: 0,
+                isPremium: false,
+                premiumExpiry: 0,
+                isBanned: false,
+                settings: { pushNotifications: true },
+                stats: { matchesPlayed: 0, totalKilled: 0, amountWon: 0 },
+                transactions: {}
+            };
+
+            await db.ref('users/' + username).set(newUser);
+            localStorage.setItem('username', username);
+            await finalizeLoginSuccess(username, connectedServerId);
+            alert('Account created successfully and logged in!');
+        } catch (error) {
+            console.error("Sign up error:", error);
+            alert("An error occurred during sign up. Please try again.");
+        }
+    }
+
+    /**
+     * Handles going back from the match details screen.
+     * This needs to remember which game's match list was open.
+     */
+    function goBackFromMatchDetails() {
+        // For now, let's assume it always goes back to the main app-container.
+        // In a more complex app, you'd store the previous gameMode to return to specific game matches.
+        showScreen('app-container'); // Go back to the main app dashboard
+    }
+
+    /**
+     * Shows the sign-up form and hides the login form.
+     * @param {Event} event - The event that triggered the form switch.
+     */
+    function showSignUpForm(event) {
+        event.preventDefault();
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('signup-form').style.display = 'block';
+        document.getElementById('form-title').innerText = 'Sign Up';
+    }
+
+    /**
+     * Shows the login form and hides the sign-up form.
+     * @param {Event} event - The event that triggered the form switch.
+     */
+    function showLoginForm(event) {
+        event.preventDefault();
+        document.getElementById('signup-form').style.display = 'none';
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('form-title').innerText = 'Login';
+    }
+
+    /**
+     * Loads advertisements into the ad container.
+     * Only loads if the user is not premium.
+     */
+    function loadAds() {
+        const adContainer = document.getElementById('ad-container');
+        if (!adContainer || isCurrentUserPremium) {
+            console.log('Ad container not found or user is premium. Ads cannot be loaded.');
+            return;
+        }
+
+        adContainer.innerHTML = '';
+
+        if (!isCurrentUserPremium) {
+            window.atOptions = {
+                'key' : '44d07ffd0361b84184a000cbe6a0c582',
+                'format' : 'iframe',
+                'height' : 50,
+                'width' : 320,
+                'params' : {}
+            };
+
+            const script1 = document.createElement('script');
+            script1.type = 'text/javascript';
+            script1.innerHTML = `atOptions = ${JSON.stringify(window.atOptions)};`;
+            adContainer.appendChild(script1);
+
+            const script2 = document.createElement('script');
+            script2.type = 'text/javascript';
+            script2.src = '//www.highperformanceformat.com/44d07ffd0361b84184a000cbe6a0c582/invoke.js';
+            adContainer.appendChild(script2);
+            
+            console.log('Ads loaded for non-premium user.');
+        } else {
+             adContainer.classList.add('hidden');
+        }
+    }
+
+    /**
+     * Removes all advertisements from the ad container.
+     */
+    function removeAds() {
+        const adContainer = document.getElementById('ad-container');
+        if (adContainer) {
+            adContainer.innerHTML = '';
+            adContainer.classList.add('hidden');
+            console.log('Ads removed.');
+        }
+        if (window.atOptions) {
+            delete window.atOptions;
+        }
+    }
+
+
+    /**
+     * Detaches Firebase listeners related to user data (balance and notices).
+     */
+    function detachUserDataListeners() {
+        if (userBalanceListener && currentUser) {
+            db.ref('users/' + currentUser).off('value', userBalanceListener);
+            userBalanceListener = null;
+        }
+        if (userNoticeListener && currentUser) {
+            db.ref('users/' + currentUser + '/notice').off('value', userNoticeListener);
+            userNoticeListener = null;
+        }
+    }
+
+    /**
+     * Loads and displays user-specific data, including balance, premium status, and transaction history.
+     * Also checks for and handles pending gifts.
+     * @returns {Promise<void>}
+     */
+    async function loadUserData() { 
+        if (!currentUser) return; 
+        
+        detachUserDataListeners();
+
+        const userRef = db.ref('users/' + currentUser); 
+        
+        userBalanceListener = userRef.on('value', async (snapshot) => { // Made async to await gift check
+            const userData = snapshot.val(); 
+            if (userData) { 
+                if (userData.isBanned) { handleFullLogout(); showBannedScreen(); return; } 
+
+                const now = Date.now();
+                isCurrentUserPremium = (userData.isPremium && userData.premiumExpiry > now);
+                const adContainer = document.getElementById('ad-container'); 
+
+                // Handle Premium Badge for Home Screen
+                const userDisplayDiv = document.getElementById('account-username-display');
+                if (userDisplayDiv) {
+                    // Clear any old premium badge before adding a new one
+                    let existingBadge = userDisplayDiv.querySelector('.premium-badge-img');
+                    if (existingBadge) {
+                        existingBadge.remove();
+                    }
+
+                    userDisplayDiv.innerText = `${currentUser}`; // Reset text content to just username
+
+                    if (isCurrentUserPremium) {
+                        const premiumBadgeImg = document.createElement('img');
+                        premiumBadgeImg.alt = 'Premium';
+                        premiumBadgeImg.classList.add('premium-badge-img');
+                        userDisplayDiv.appendChild(premiumBadgeImg);
+                    }
+                }
+                
+                // Set the account icon based on premium status and expiry
+                const accountUserIcon = document.getElementById('account-user-icon');
+                if (accountUserIcon) {
+                    if (isCurrentUserPremium) {
+                        const remainingTime = userData.premiumExpiry - now;
+                        const remainingDays = Math.ceil(remainingTime / (1000 * 60 * 60 * 24));
+                        if (remainingDays <= 1) {
+                            accountUserIcon.src = 'p1.png';
+                        } else if (remainingDays <= 7) {
+                            accountUserIcon.src = 'p7.png';
+                        } else {
+                            accountUserIcon.src = 'p30.png';
+                        }
+                    } else {
+                        accountUserIcon.src = 'icon.png';
+                    }
+                }
+
+                if (isCurrentUserPremium) {
+                    removeAds(); 
+                } else {
+                    if (document.getElementById('app-container').style.display === 'block' || document.getElementById('app-container').style.display === 'flex') { // Check if app-container is actually visible
+                        adContainer.classList.remove('hidden');
+                        loadAds();
+                    } else {
+                        adContainer.classList.add('hidden');
+                        removeAds(); 
+                    }
+                }
+
+                const balance = userData.balance || 0; 
+                const winMoney = userData.winMoney || 0;
+                const joinMoney = userData.joinMoney || 0;
+
+                document.getElementById('header-balance-display').innerText = `${balance.toFixed(2)}`; 
+                
+                // Wallet Screen Specifics
+                if (document.getElementById('total-balance-display')) document.getElementById('total-balance-display').innerText = `₹${balance.toFixed(2)}`;
+                if (document.getElementById('win-money-display')) document.getElementById('win-money-display').innerText = `₹${winMoney.toFixed(2)}`;
+                if (document.getElementById('join-money-display')) document.getElementById('join-money-display').innerText = `₹${joinMoney.toFixed(2)}`;
+
+                // Account Screen Specifics
+                if (document.getElementById('account-username-display')) document.getElementById('account-username-display').innerText = `${currentUser}`;
+                if (document.getElementById('account-balance-display')) document.getElementById('account-balance-display').innerText = `₹${balance.toFixed(2)}`;
+                if (document.getElementById('stats-matches-played')) document.getElementById('stats-matches-played').innerText = userData.stats?.matchesPlayed || 0;
+                if (document.getElementById('stats-total-killed')) document.getElementById('stats-total-killed').innerText = userData.stats?.totalKilled || 0;
+                if (document.getElementById('stats-amount-won')) document.getElementById('stats-amount-won').innerText = `₹${(userData.stats?.amountWon || 0).toFixed(2)}`;
+                
+                const historyList = document.getElementById('history-list'); 
+                if(historyList) { 
+                    historyList.innerHTML = ''; 
+                    const transactions = userData.transactions ? Object.values(userData.transactions).sort((a,b) => new Date(b.timestamp) - new Date(a.timestamp)) : []; 
+                    if (transactions.length > 0) { 
+                        transactions.forEach(item => { 
+                            const li = document.createElement('li'); 
+                            if(item.type === 'withdraw_request') { li.innerHTML = `Withdrawal: ₹${item.amount} - <span style="color:${item.status === 'pending' ? 'var(--accent-color-1)' : (item.status === 'completed' ? 'var(--success-green)' : 'var(--error-red)')};">${item.status.toUpperCase()}</span>`; } 
+                            else if (item.type === 'sent') { li.innerHTML = `Sent ₹${item.amount} to <strong>${item.to}</strong> <i class="fa-solid fa-arrow-up" style="color: var(--error-red);"></i>`; } 
+                            else if (item.type === 'received') { li.innerHTML = `Received ₹${item.amount} from <strong>${item.from}</strong> <i class="fa-solid fa-arrow-down" style="color: var(--success-green);"></i>`; } 
+                            else if (item.type === 'match_winnings') { li.innerHTML = `Won ₹${item.amount} from ${item.matchTitle || 'a match'} <i class="fa-solid fa-trophy" style="color: var(--accent-color-1);"></i>`; } 
+                            else if (item.type === 'entry_fee') { li.innerHTML = `Paid ₹${item.amount} entry for ${item.matchTitle || 'a match'} <i class="fa-solid fa-ticket" style="color: var(--error-red);"></i>`; }
+                            else if (item.type === 'gift_received') { li.innerHTML = `Gift: <strong>+₹${item.amount}</strong> <i class="fa-solid fa-gift" style="color: #FFD700;"></i>`; } // New history type for gifts
+                            else if (item.type === 'add_money_request') { li.innerHTML = `Add Money Request: ₹${item.amount} - <span style="color:${item.status === 'pending' ? 'var(--accent-color-1)' : (item.status === 'approved' ? 'var(--success-green)' : 'var(--error-red)')};">${item.status.toUpperCase()}</span>`; } // New history type for add money
+                            historyList.appendChild(li); 
+                        }); 
+                    } else { historyList.innerHTML = '<li>No transaction history.</li>'; } 
+                } 
+
+                // NEW: Check for pending gifts and show modal
+                await checkForPendingGifts(); // Wait for gift check to complete
+            } 
+        }, (error) => {
+            console.error("Error loading user data:", error);
+            alert("Failed to load user data. Please try logging in again.");
+            handleLogout(null);
+        }); 
+        
+        userNoticeListener = userRef.child('notice').on('value', (snapshot) => {
+            currentNotice = snapshot.val(); 
+            const noticeBanner = document.getElementById('announcement-banner');
+            if (currentNotice && currentNotice.message && noticeBanner) { 
+                noticeBanner.innerText = `Announcement: ${currentNotice.message}`;
+                noticeBanner.style.display = 'block';
+            } else if (noticeBanner) { 
+                noticeBanner.style.display = 'none'; 
+            } 
+        }, (error) => {
+            console.error("Error loading user notice:", error);
+        }); 
+    }
+
+    /**
+     * Checks Firebase for any pending gifts for the current user and displays the gift box modal if found.
+     * @returns {Promise<void>}
+     */
+    async function checkForPendingGifts() {
+        if (!currentUser) return;
+
+        const giftsRef = db.ref(`users/${currentUser}/gifts`);
+        const snapshot = await giftsRef.orderByChild('status').equalTo('pending').once('value');
+
+        if (snapshot.exists()) {
+            // Find the first pending gift
+            const firstGiftEntry = Object.entries(snapshot.val())[0];
+            currentGiftId = firstGiftEntry[0];
+            currentGiftData = firstGiftEntry[1];
+
+            document.getElementById('gift-message-text').innerText = "Click the box to reveal your surprise!";
+            document.getElementById('gift-box-image').src = 'gift.png'; // Reset image
+            document.querySelector('.gift-image-container').classList.remove('claimed'); // Reset state
+            document.getElementById('claimed-gift-amount').style.display = 'none'; // Hide amount
+            openModal(null, 'gift-box-modal');
+        } else {
+            currentGiftId = null;
+            currentGiftData = null;
+            closeModal(null, 'gift-box-modal');
+        }
+    }
+
+    /**
+     * Generates a random gift amount based on defined rarity tiers within a min/max range.
+     * @param {number} min - The minimum possible gift amount.
+     * @param {number} max - The maximum possible gift amount.
+     * @returns {number} - The randomly generated gift amount (integer).
+     */
+    function generateRandomGiftAmount(min, max) {
+        if (min === max) return min;
+
+        const range = max - min;
+        const rand = Math.random();
+
+        let amount;
+
+        if (rand < 0.60) { 
+            amount = min + Math.random() * (range * 0.33);
+        } else if (rand < 0.85) {
+            amount = min + (range * 0.33) + Math.random() * (range * 0.34);
+        } else {
+            amount = min + (range * 0.67) + Math.random() * (range * 0.33);
+        }
+        
+        return Math.floor(amount);
+    }
+
+    /**
+     * Handles the claiming of a gift from the gift box.
+     * Updates user balance, records transaction, and updates gift status in Firebase.
+     * @returns {Promise<void>}
+     */
+    async function claimGift() {
+        if (!currentUser || !currentGiftId || !currentGiftData) {
+            alert("No gift available to claim.");
+            closeModal(null, 'gift-box-modal');
+            return;
+        }
+
+        const giftImageContainer = document.querySelector('.gift-image-container');
+        if (giftImageContainer.classList.contains('claimed')) {
+            alert("This gift has already been claimed.");
+            return;
+        }
+        
+        giftImageContainer.classList.add('claimed');
+        giftImageContainer.style.cursor = 'default';
+
+        const minAmount = currentGiftData.minAmount;
+        const maxAmount = currentGiftData.maxAmount;
+        const claimedAmount = generateRandomGiftAmount(minAmount, maxAmount);
+
+        try {
+            await db.ref(`users/${currentUser}`).transaction(userData => {
+                if (userData) {
+                    userData.balance = (userData.balance || 0) + claimedAmount;
+                    userData.winMoney = (userData.winMoney || 0) + claimedAmount;
+                    const transactionId = db.ref().child('transactions').push().key;
+                    if (!userData.transactions) userData.transactions = {};
+                    userData.transactions[transactionId] = {
+                        type: 'gift_received',
+                        amount: claimedAmount,
+                        timestamp: new Date().toISOString()
+                    };
+                }
+                return userData;
+            });
+
+            await db.ref(`users/${currentUser}/gifts/${currentGiftId}`).update({
+                status: 'claimed',
+                claimedAmount: claimedAmount,
+                claimedAt: new Date().toISOString()
+            });
+
+            document.getElementById('gift-message-text').innerText = "Congratulations!";
+            const claimedAmountDisplay = document.getElementById('claimed-gift-amount');
+            claimedAmountDisplay.innerText = `+₹${claimedAmount}`;
+            claimedAmountDisplay.style.display = 'block';
+
+            alert(`You claimed ₹${claimedAmount} from the gift box!`);
+            currentGiftId = null;
+            currentGiftData = null;
+
+            await loadUserData();
+
+        } catch (error) {
+            console.error("Error claiming gift:", error);
+            alert("Failed to claim gift. Please try again.");
+            giftImageContainer.classList.remove('claimed');
+            giftImageContainer.style.cursor = 'pointer';
+        }
+    }
+
+    // --- New Navigation and Screen Functions ---
+    function showAccountScreen() {
+        if (!currentUser) { alert('Please log in.'); showScreen('login-container'); return; }
+        showScreen('account-container');
+        loadUserData(); 
+    }
+
+    function showMyMatches() {
+        if (!currentUser) { alert('Please log in.'); showScreen('login-container'); return; }
+        showScreen('my-matches-list-container');
+        loadJoinedMatches();
+    }
+
+    /**
+     * NEW: Loads and displays the ranks (leaderboard) sorted by user balance.
+     */
+    async function showRanks() {
+        if (!currentUser) {
+            alert('Please log in to view ranks.');
+            showScreen('login-container');
+            return;
+        }
+        showScreen('ranks-container');
+        const ranksList = document.getElementById('ranks-list');
+        ranksList.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">Fetching ranks...</p>';
+
+        try {
+            const usersSnapshot = await db.ref('users').once('value');
+            if (!usersSnapshot.exists()) {
+                ranksList.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">No users found to rank.</p>';
+                return;
+            }
+
+            let users = [];
+            usersSnapshot.forEach(childSnapshot => {
+                const userData = childSnapshot.val();
+                if (userData.balance !== undefined && !userData.isBanned) {
+                    users.push({
+                        username: childSnapshot.key,
+                        balance: userData.balance
+                    });
+                }
+            });
+
+            users.sort((a, b) => b.balance - a.balance);
+
+            if (users.length > 0) {
+                ranksList.innerHTML = '';
+                users.forEach((user, index) => {
+                    const listItem = document.createElement('li');
+                    listItem.className = 'rank-item';
+                    if (index < 3) {
+                        listItem.classList.add('top3');
+                    }
+                    listItem.innerHTML = `
+                        <span class="rank-number">${index + 1}</span>
+                        <div class="rank-details-group">
+                            <span class="rank-username">${user.username}</span>
+                            <span class="rank-balance">₹${user.balance.toFixed(2)}</span>
+                        </div>
+                    `;
+                    ranksList.appendChild(listItem);
+                });
+            } else {
+                ranksList.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">No ranked players available.</p>';
+            }
+
+        } catch (error) {
+            console.error("Error loading ranks:", error);
+            ranksList.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">Error loading ranks. Please try again.</p>';
+        }
+    }
+
+
+    function showMyOrder() {
+        showScreen('my-order-container');
+    }
+
+    function openWalletModal() {
+        if (!currentUser) { alert('Please log in.'); showScreen('login-container'); return; }
+        showScreen('my-wallet-container');
+        loadUserData();
+    }
+
+    function showMyWalletScreen() {
+        openWalletModal();
+    }
+
+    function openMainMenuModal() { 
+        showScreen('app-container');
+        document.getElementById('main-menu-modal').style.display = 'flex'; 
+        const serverId = localStorage.getItem('connectedServerId'); 
+        if(serverId) { 
+            db.ref(`servers/${serverId}/name`).once('value', snapshot => { 
+                document.getElementById('connected-server-name').innerText = snapshot.val() || 'Unknown'; 
+            }, (error) => { console.error("Error fetching server name for menu:", error); document.getElementById('connected-server-name').innerText = 'Error'; }); 
+        } 
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            const btnThemeNameMatch = btn.onclick.toString().match(/changeTheme\('(\w+)'\)/);
+            const themeName = btnThemeNameMatch ? btnThemeNameMatch[1] : '';
+
+            if (isCurrentUserPremium) {
+                btn.removeAttribute('disabled');
+                btn.style.opacity = '1';
+                btn.style.filter = 'grayscale(0%)';
+            } else {
+                if (isPremiumTheme(themeName) || !ALLOWED_NORMAL_THEMES.includes(themeName)) {
+                    btn.setAttribute('disabled', 'true');
+                    btn.style.opacity = '0.4';
+                    btn.style.filter = 'grayscale(80%)';
+                } else {
+                    btn.removeAttribute('disabled');
+                    btn.style.opacity = '1';
+                    btn.style.filter = 'grayscale(0%)';
+                }
+            }
+
+            const currentTheme = localStorage.getItem('theme') || 'thunderclash';
+            if (themeName === currentTheme) { 
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+    }
+
+    async function showProfilePage() {
+        if (!currentUser) {
+            alert('Please log in to view your profile.');
+            showScreen('login-container');
+            return;
+        }
+        showScreen('profile-page-container');
+        document.getElementById('change-password-form').reset();
+
+        const telegramIdEl = document.getElementById('telegram-id-display');
+        const telegramLinkEl = document.getElementById('telegram-link');
+        const telegramId = 'Support859564'; 
+        telegramIdEl.innerText = `@${telegramId}`;
+        telegramLinkEl.href = `https://t.me/${telegramId}`;
+    }
+
+    function showSupportPage() {
+        showProfilePage();
+    }
+
+
+    function handleChangePassword() {
+        const oldPassword = document.getElementById('old-password').value;
+        const newPassword = document.getElementById('new-password').value;
+        const confirmNewPassword = document.getElementById('confirm-new-password').value;
+
+        if (!oldPassword || !newPassword || !confirmNewPassword) {
+            alert('Please fill in all password fields.');
+            return;
+        }
+
+        if (newPassword !== confirmNewPassword) {
+            alert('New password and confirm new password do not match.');
+            return;
+        }
+        
+        if (newPassword.length < 6) {
+            alert('New password must be at least 6 characters long.');
+            return;
+        }
+
+        db.ref('users/' + currentUser).once('value', (snapshot) => {
+            const userData = snapshot.val();
+            if (userData.password === oldPassword) {
+                db.ref('users/' + currentUser + '/password').set(newPassword)
+                    .then(() => {
+                        alert('Password changed successfully!');
+                        document.getElementById('change-password-form').reset();
+                    })
+                    .catch(error => alert('Failed to change password: ' + error.message));
+            } else {
+                alert('Old password is incorrect.');
+            }
+        }, (error) => { console.error("Error validating old password:", error); alert("Error changing password. Please try again."); });
+    }
+
+    function detachMatchesListener() {
+        if (matchesListener) {
+            db.ref('matches').off('value', matchesListener); 
+            matchesListener = null;
+        }
+    }
+
+    function renderHomePageGameButtons() {
+        const gameModeGrid = document.getElementById('game-mode-cards-grid');
+        gameModeGrid.innerHTML = '';
+
+        HOME_PAGE_GAME_BUTTONS_DATA.forEach(mode => {
+            const card = document.createElement('button');
+            card.className = 'game-mode-card';
+            card.onclick = () => showGameMatches(mode.id, mode.name);
+            card.innerHTML = `
+                <img src="${mode.img}" alt="${mode.name}">
+                <div class="text-content">
+                    <h3>${mode.name}</h3>
+                    <p>${mode.subtitle}</p>
+                </div>
+            `;
+            gameModeGrid.appendChild(card);
+        });
+    }
+
+    function loadMatches(gameMode, targetElementId) { 
+        detachMatchesListener();
+
+        const matchesListElement = document.getElementById(targetElementId); 
+        matchesListElement.innerHTML = '';
+
+        if (!currentUser) {
+            matchesListElement.innerHTML = '<p style="text-align:center;">Please log in to see matches.</p>';
+            return;
+        }
+
+        let matchesQuery = db.ref('matches').orderByChild('gameMode').equalTo(gameMode);
+        
+        matchesListener = matchesQuery.on('value', (snapshot) => { 
+            matchesListElement.innerHTML = ''; 
+            if (!currentUser) { 
+                matchesListElement.innerHTML = '<p style="text-align:center;">Please log in to see matches.</p>';
+                return;
+            }
+
+            db.ref('users/' + currentUser).once('value', (userSnapshot) => { 
+                const joinedMatches = userSnapshot.val()?.joinedMatches || {}; 
+                let matches = []; 
+                snapshot.forEach(child => { matches.push({ id: child.key, ...child.val() }); }); 
+                
+                matches.sort((a, b) => new Date(b.time) - new Date(a.time));
+                
+                if (matches.length > 0) { 
+                    matches.forEach(match => { 
+                        const card = document.createElement('div'); 
+                        card.className = 'match-card glass-card'; 
+                        const isJoined = joinedMatches[match.id]; 
+                        const sanitizedTitle = match.title.replace(/'/g, "\\'").replace(/"/g, "&quot;"); 
+                        const isJoinDisabled = isJoined || isUnlimitedBalanceMode; 
+                        card.innerHTML = ` 
+                            <div class="match-card-icon"><img src="icon.png" alt="Galaxy Rush"></div>
+                            <div class="match-details"> 
+                                <div> 
+                                    <h3>${match.title}</h3> 
+                                    <p>Time: <strong>${new Date(match.time).toLocaleString()}</strong></p> 
+                                    <p>Prize: <strong>₹${match.prize}</strong> | Entry: <strong>₹${match.entryFee || 0}</strong></p> 
+                                </div> 
+                                <div class="button-group"> 
+                                    <button id="join-${match.id}" class="action-button" onclick="joinMatch('${match.id}', ${match.entryFee || 0}, '${match.gameType}', '${sanitizedTitle}')" ${isJoinDisabled ? 'disabled' : ''}>${isJoined ? 'Joined' : 'Join'}</button> 
+                                    <button class="view-details-button" onclick="viewMatchDetails('${match.id}')" ${!isJoined ? 'style="display:none;"' : ''}>Details</button> 
+                                </div> 
+                            </div>`; 
+                        matchesListElement.appendChild(card); 
+                    }); 
+                } else { matchesListElement.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">NO LIVE MATCHES</p>'; } 
+            }, (error) => { console.error("Error fetching user joined matches:", error); matchesListElement.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">Error loading user data.</p>'; }); 
+        }, (error) => { console.error("Error loading matches:", error); matchesListElement.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">Error loading matches from server.</p>'; }); 
+    }
+
+    function loadJoinedMatches() {
+        const joinedMatchesListElement = document.getElementById('my-joined-matches-list');
+        joinedMatchesListElement.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">Loading your matches...</p>';
+
+        if (!currentUser) {
+            joinedMatchesListElement.innerHTML = '<p style="text-align:center;">Please log in to see your matches.</p>';
+            return;
+        }
+
+        db.ref(`users/${currentUser}/joinedMatches`).on('value', async (joinedSnapshot) => {
+            const joinedMatchIds = joinedSnapshot.val() ? Object.keys(joinedSnapshot.val()) : [];
+            if (joinedMatchIds.length === 0) {
+                joinedMatchesListElement.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">You have not joined any matches yet.</p>';
+                return;
+            }
+
+            joinedMatchesListElement.innerHTML = '';
+
+            const matchPromises = joinedMatchIds.map(matchId => db.ref(`matches/${matchId}`).once('value'));
+            const matchSnapshots = await Promise.all(matchPromises);
+
+            let hasMatches = false;
+            matchSnapshots.forEach(matchSnapshot => {
+                const match = matchSnapshot.val();
+                if (match) {
+                    hasMatches = true;
+                    const card = document.createElement('div');
+                    card.className = 'match-card glass-card';
+                    const sanitizedTitle = match.title.replace(/'/g, "\\'").replace(/"/g, "&quot;");
+                    card.innerHTML = ` 
+                        <div class="match-card-icon"><img src="icon.png" alt="Galaxy Rush"></div>
+                        <div class="match-details"> 
+                            <div> 
+                                <h3>${match.title}</h3> 
+                                <p>Time: <strong>${new Date(match.time).toLocaleString()}</strong></p> 
+                                <p>Prize: <strong>₹${match.prize}</strong> | Entry: <strong>₹${match.entryFee || 0}</strong></p> 
+                            </div> 
+                            <div class="button-group"> 
+                                <button class="action-button" disabled>Joined</button> 
+                                <button class="view-details-button" onclick="viewMatchDetails('${match.id}')">Details</button> 
+                            </div> 
+                        </div>`; 
+                    joinedMatchesListElement.appendChild(card); 
+                }
+            });
+
+            if (!hasMatches) {
+                joinedMatchesListElement.innerHTML = '<p style="text-align:center; color: var(--text-secondary-ui);">You have not joined any matches yet.</p>';
+            }
+        });
+    }
+
+    function showGameMatches(gameMode, title) {
+        if (!currentUser) {
+            alert('Please log in to view matches.');
+            showScreen('login-container');
+            return;
+        }
+        showScreen('game-matches-container');
+        document.getElementById('game-matches-title').innerText = title;
+        loadMatches(gameMode, 'game-specific-matches-list');
+    }
+
+    function handlePinVerification() { 
+        const enteredPin = document.getElementById('thunder-pin-input').value;
+        if (!/^\d{4}$/.test(enteredPin)) { alert('Please enter your 4-digit Thunder PIN.'); return; }
+        if (!pendingTransferData) { alert('Error: No pending transaction found.'); showScreen('app-container'); return; } 
+        db.ref('users/' + currentUser + '/thunderPin').once('value', (snapshot) => {
+            const correctPin = snapshot.val(); 
+            if (enteredPin === correctPin) { 
+                performTransfer(pendingTransferData.recipient, pendingTransferData.amount, () => { 
+                    showScreen('transfer-success-container'); pendingTransferData = null; 
+                }); 
+            } else { alert('Incorrect PIN. Please try again.'); document.getElementById('thunder-pin-input').value = ''; }
+        }, (error) => { console.error("Error fetching Thunder PIN:", error); alert("Error verifying PIN. Please try again."); }); 
+    }
+
+    function cancelPinVerification() { 
+        pendingTransferData = null; 
+        document.getElementById('thunder-pin-input').value = '';
+        showScreen('app-container'); alert('Payment cancelled.'); 
+    }
+
+    function performTransfer(recipientUsername, amount, onSuccessCallback) { 
+        const usersRef = db.ref('users'); 
+        usersRef.transaction((allUsers) => { 
+            if (allUsers) { 
+                const sender = allUsers[currentUser]; 
+                const recipient = allUsers[recipientUsername]; 
+                if (!sender || !recipient || (sender.balance || 0) < amount) {
+                    console.warn("Transaction failed in transaction handler: insufficient balance or user not found.");
+                    return;
+                }
+                sender.balance = (sender.balance || 0) - amount; 
+                sender.joinMoney = (sender.joinMoney || 0) - amount;
+                recipient.balance = (recipient.balance || 0) + amount; 
+                recipient.joinMoney = (recipient.joinMoney || 0) + amount;
+
+                const transferId = db.ref().child('transfers').push().key; 
+                const timestamp = new Date().toISOString(); 
+                const senderLog = { type: 'sent', to: recipientUsername, amount, timestamp }; 
+                const recipientLog = { type: 'received', from: currentUser, amount, timestamp }; 
+                if (!sender.transactions) sender.transactions = {}; 
+                sender.transactions[transferId] = senderLog; 
+                if (!recipient.transactions) recipient.transactions = {}; 
+                recipient.transactions[transferId] = recipientLog; 
+            } return allUsers; 
+        }, (error, committed, snapshot) => { 
+            if (error) { alert("Transaction failed: " + error.message); console.error("Firebase transaction error:", error); } 
+            else if (!committed) { alert('Transaction failed. Insufficient balance or user not found.'); } 
+            else if(onSuccessCallback) { onSuccessCallback(); } 
+        }); 
+    }
+
+    function showSendMoneyPage() {
+        if (isUnlimitedBalanceMode) { alert('Sending money is disabled in unlimited balance mode.'); return; } 
+        document.getElementById('thunder-id-recipient').value = '';
+        document.getElementById('thunder-id-amount').value = '';
+        showScreen('send-money-container');
+    }
+
+    function handleSendByThunderId() { 
+        if (isUnlimitedBalanceMode) { alert('Sending money is disabled in unlimited balance mode.'); return; } 
+        const recipientId = document.getElementById('thunder-id-recipient').value.trim();
+        const amount = parseFloat(document.getElementById('thunder-id-amount').value);
+        if (!recipientId || isNaN(amount) || amount <= 0) { alert("Please enter a valid Thunder ID and amount."); return; } 
+        db.ref('users').orderByChild('thunderId').equalTo(recipientId).once('value', (snapshot) => {
+            if (snapshot.exists()) { 
+                const recipientUsername = Object.keys(snapshot.val())[0]; 
+                if (recipientUsername === currentUser) { alert("You cannot send money to yourself."); return; } 
+                pendingTransferData = { recipient: recipientUsername, amount: amount }; 
+                document.getElementById('thunder-pin-input').value = '';
+                showScreen('pin-verification-container'); 
+            } else { alert("Thunder ID not found."); }
+        }, (error) => { console.error("Error searching for Thunder ID:", error); alert("Error searching for recipient. Please try again."); }); 
+    }
+
+    function handleWithdraw(event) { 
+        event.preventDefault(); 
+        if (isUnlimitedBalanceMode) { alert('Withdrawals are disabled in unlimited balance mode.'); return; } 
+        const amount = parseFloat(document.getElementById('withdraw-amount').value); 
+        const upi = document.getElementById('upi-id-input').value.trim(); 
+        const withdrawMethod = document.querySelector('input[name="withdraw-method"]:checked').value;
+
+        if (isNaN(amount) || amount <= 0 || !upi) { alert('Please fill all fields.'); return; } 
+
+        db.ref('users/' + currentUser).transaction(userData => { 
+            if (userData) { 
+                if ((userData.winMoney || 0) < amount) {
+                    return; 
+                } 
+                userData.balance -= amount; 
+                userData.winMoney -= amount; 
+
+                const requestId = db.ref().child('withdrawRequests').push().key; 
+                const requestData = { username: currentUser, amount, upi, method: withdrawMethod, status: 'pending', timestamp: new Date().toISOString(), type: 'withdraw_request' }; 
+                if (!userData.transactions) userData.transactions = {}; 
+                userData.transactions[requestId] = requestData; 
+                db.ref(`withdrawRequests/${requestId}`).set(requestData); 
+                return userData; 
+            } return; 
+        }, (error, committed) => { 
+            if (error) { alert('Error: ' + error.message); console.error("Firebase transaction error for withdrawal:", error); } 
+            else if (committed) { alert('Withdraw request sent!'); event.target.reset(); showMyWalletScreen(); } 
+            else { alert('Insufficient win money balance.'); } 
+        }); 
+    }
+
+    function showServerList() { 
+        showScreen('server-list-container'); 
+        const serverList = document.getElementById('server-list'); 
+        serverList.innerHTML = '<li>Loading servers...</li>'; 
+        const connectedServerId = localStorage.getItem('connectedServerId'); 
+        db.ref('servers').once('value', snapshot => { 
+            serverList.innerHTML = ''; 
+            if (!snapshot.exists()) { serverList.innerHTML = '<li style="text-align: center; color: var(--text-secondary-ui);">No active servers found.</li>'; return; } 
+            let connectedServerNode = null; 
+            const otherServerNodes = []; 
+            snapshot.forEach(childSnapshot => { 
+                const serverId = childSnapshot.key; 
+                const serverData = childSnapshot.val(); 
+                const li = document.createElement('li'); 
+                li.className = 'server-item glass-card'; 
+                const isOnline = serverData.status === 'online'; 
+                const unlimitedBadge = serverData.unlimitedBalance ? `<small class="unlimited-badge">Unlimited Balance</small>` : ''; 
+                li.innerHTML = `<div><span>${serverData.name}</span><small class="status-${isOnline ? 'online' : 'offline'}">${isOnline ? 'Online' : 'Offline'}</small>${unlimitedBadge}</div>`; 
+                if (serverId === connectedServerId) { 
+                    li.style.borderColor = "var(--accent-color-1)";
+                    li.onclick = () => { if (confirm(`Are you sure you want to disconnect from ${serverData.name}?`)) { disconnectFromServer(); } }; 
+                    connectedServerNode = li; 
+                } else { 
+                    li.onclick = () => showServerLoginForm(serverId, serverData.name); 
+                    otherServerNodes.push(li); 
+                } 
+            }); 
+            if (connectedServerNode) { serverList.appendChild(connectedServerNode); } 
+            otherServerNodes.forEach(node => serverList.appendChild(node)); 
+        }, (error) => { console.error("Error loading server list:", error); serverList.innerHTML = '<li style="text-align: center; color: var(--text-secondary-ui);">Error loading servers.</li>'; }); 
+    }
+
+    function showServerLoginForm(serverId, serverName) { 
+        selectedServerId = serverId; 
+        document.getElementById('server-login-title').innerText = `Connect to ${serverName}`; 
+        document.getElementById('server-login-form').reset(); 
+        showScreen('server-login-container'); 
+    }
+
+    async function handleServerConnect() { 
+        if (!selectedServerId) return; 
+        const password = document.getElementById('server-password').value; 
+        const activationCode = document.getElementById('server-activation-code').value; 
+
+        db.ref(`servers/${selectedServerId}`).once('value', async (snapshot) => { 
+            if (!snapshot.exists()) { alert('Server not found.'); return; } 
+            const serverData = snapshot.val(); 
+            if (serverData.password === password && serverData.activationCode === activationCode) { 
+                if (serverData.status !== 'online') { alert('This server is currently offline. Please try another one.'); return; } 
+
+                localStorage.setItem('connectedServerId', selectedServerId); 
+                alert(`Successfully connected to ${serverData.name}!`); 
+
+                const username = localStorage.getItem('username');
+                if (username) {
+                    await finalizeLoginSuccess(username, selectedServerId);
+                } else {
+                    showScreen('login-container');
+                }
+            } else { alert('Incorrect password or activation code.'); } 
+        }, (error) => { console.error("Error connecting to server:", error); alert("Error connecting to server. Please try again."); }); 
+    }
+
+    function disconnectFromServer(confirmDisconnect = true) { 
+        if (confirmDisconnect && !confirm("Are you sure you want to disconnect? This will log you out.")) { return; } 
+        handleFullLogout(); 
+    }
+
+    function openNoticeModal() { 
+        const modal = document.getElementById('notice-modal'); 
+        const messageEl = document.getElementById('notice-message-content'); 
+        if (currentNotice && currentNotice.message) { messageEl.innerText = currentNotice.message; } 
+        else { messageEl.innerText = "You have no new notices from the admin."; } 
+        openModal(null, 'notice-modal'); 
+    }
+
+    function deleteNotice() { 
+        if (!currentUser) return; 
+        db.ref('users/' + currentUser + '/notice').remove().then(() => { 
+            closeModal({target: {id: 'notice-modal'}}, 'notice-modal'); 
+        }).catch(err => { console.error("Could not delete notice:", err); alert("Could not delete notice. Error: " + err.message); }); 
+    }
+
+    function joinMatch(matchId, entryFee, gameType, matchTitle) {
+        if (isUnlimitedBalanceMode) {
+            alert('Joining matches is disabled in unlimited balance mode.');
+            return;
+        }
+        if (!currentUser) return;
+
+        let userIdInput = 'premium_join'; // Default value for premium user automatic join
+
+        // For non-premium users or games other than 'filework', prompt for details
+        if (!isCurrentUserPremium || gameType !== 'filework') {
+            const promptMsg = {
+                filework: "WhatsApp number",
+                freefire: "Free Fire UID",
+                ludo: "Ludo User ID",
+                mysterybox: "Your ID"
+            } [gameType] || "Game ID";
+            userIdInput = prompt(`Please enter your ${promptMsg} to join:`);
+            if (!userIdInput) {
+                alert("This is required.");
+                return;
+            }
+        }
+        
+        const joinButton = document.getElementById(`join-${matchId}`);
+        joinButton.disabled = true;
+        joinButton.innerText = 'Processing...';
+        
+        db.ref('users/' + currentUser).transaction((userData) => {
+            if (userData && (userData.balance || 0) >= entryFee) {
+                userData.balance -= entryFee;
+                userData.joinMoney = (userData.joinMoney || 0) - entryFee;
+                if (entryFee > 0) {
+                    const transactionId = db.ref().child('transactions').push().key;
+                    if (!userData.transactions) userData.transactions = {};
+                    userData.transactions[transactionId] = {
+                        type: 'entry_fee',
+                        amount: entryFee,
+                        matchId: matchId,
+                        matchTitle: matchTitle,
+                        timestamp: new Date().toISOString()
+                    };
+                }
+                return userData;
+            }
+            return;
+        }, (error, committed) => {
+            if (error) {
+                alert('Transaction failed: ' + error);
+                console.error("Firebase transaction error for joining match:", error);
+            } else if (!committed) {
+                alert(`Insufficient balance! You need ₹${entryFee}.`);
+            } else {
+                const updates = {};
+                updates[`/users/${currentUser}/joinedMatches/${matchId}`] = true;
+                updates[`/matches/${matchId}/joined/${currentUser}`] = { uid: userIdInput.trim() };
+                db.ref().update(updates).then(() => alert('Successfully joined!'))
+                    .catch(updateError => {
+                        console.error("Error updating joined match data:", updateError);
+                        alert("Error joining match. Please try again.");
+                    });
+            }
+            if (!committed) {
+                joinButton.disabled = false;
+                joinButton.innerText = 'Join';
+            }
+        });
+    }
+
+
+    function viewMatchDetails(matchId) { 
+        db.ref('matches/' + matchId).once('value', (matchSnapshot) => { 
+            const match = matchSnapshot.val(); 
+            if (!match) { alert('Match not found.'); return; } 
+            currentMatchData = { id: matchId, ...match }; 
+            db.ref(`matches/${matchId}/joined/${currentUser}/uid`).once('value', (uidSnapshot) => { 
+                document.getElementById('details-uid-label').innerText = {
+                    filework: 'Your Number:', 
+                    freefire: 'Your Game ID:', 
+                    ludo: 'Your Game ID:', 
+                    mysterybox: 'Your ID:'
+                }[match.gameType] || 'Your ID:'; 
+                document.getElementById('details-title').innerText = match.title; 
+                document.getElementById('details-time').innerText = new Date(match.time).toLocaleString(); 
+                document.getElementById('details-prize').innerText = `₹${match.prize}`; 
+                document.getElementById('details-entry').innerText = `₹${match.entryFee || 0}`; 
+                document.getElementById('details-uid').innerText = uidSnapshot.val() || 'Not found'; 
+                const finishBtn = document.getElementById('finish-match-btn'); 
+                db.ref('finishRequests').orderByChild('matchUser').equalTo(`${matchId}_${currentUser}`).once('value', (reqSnap) => { 
+                    finishBtn.disabled = reqSnap.exists(); 
+                    finishBtn.innerText = reqSnap.exists() ? `Request Sent (${Object.values(reqSnap.val())[0].status})` : 'Finish Match'; 
+                }, (error) => { console.error("Error checking finish requests:", error); finishBtn.innerText = 'Error checking request'; finishBtn.disabled = true; }); 
+                showScreen('match-details-container'); 
+            }, (error) => { console.error("Error fetching match joined UID:", error); document.getElementById('details-uid').innerText = 'Error'; }); 
+        }, (error) => { console.error("Error fetching match details:", error); alert("Error fetching match details. Please try again."); }); 
+    }
+
+    function handleFinishMatch() { 
+        if (!currentUser || !currentMatchData) return; 
+        const finishBtn = document.getElementById('finish-match-btn'); 
+        finishBtn.disabled = true; 
+        finishBtn.innerText = 'Submitting...'; 
+        const newRequestRef = db.ref('finishRequests').push(); 
+        newRequestRef.set({ 
+            requestId: newRequestRef.key, 
+            username: currentUser, 
+            matchId: currentMatchData.id, 
+            matchTitle: currentMatchData.title, 
+            winningAmount: currentMatchData.prize, 
+            status: 'pending', 
+            timestamp: new Date().toISOString(), 
+            matchUser: `${currentMatchData.id}_${currentUser}` 
+        }).then(() => { alert('Request submitted!'); finishBtn.innerText = 'Request Sent (pending)'; })
+        .catch(error => { console.error("Error submitting finish request:", error); alert("Error submitting request. Please try again."); finishBtn.disabled = false; finishBtn.innerText = 'Finish Match'; }); 
+    }
+
+    // --- Add Money & Withdraw Money Functions ---
+    function showAddMoneyPage() {
+        if (!currentUser) { alert('Please log in.'); showScreen('login-container'); return; }
+        showScreen('add-money-container');
+        document.getElementById('add-money-form').reset();
+        document.getElementById('add-money-form').style.display = 'block';
+        document.getElementById('qr-payment-section').style.display = 'none';
+        document.getElementById('qrcode-image').src = '';
+        currentAddMoneyAmount = 0;
+    }
+
+    function initiateAddMoney() {
+        const amount = parseFloat(document.getElementById('add-money-amount').value);
+        if (isNaN(amount) || amount <= 0) {
+            alert("Please enter a valid amount to add.");
+            return;
+        }
+        currentAddMoneyAmount = amount;
+
+        const upiId = '8447633950@ptyes';
+        const merchantName = 'Galaxy Rush';
+        const transactionRef = 'ADD' + new Date().getTime().toString() + Math.random().toString(36).substring(2, 8).toUpperCase();
+
+        const upiUrl = `upi://pay?pa=${upiId}&pn=${merchantName}&mc=0000&tid=${transactionRef}&tr=${transactionRef}&am=${amount.toFixed(2)}&cu=INR`;
+
+        const qrcodeImage = document.getElementById('qrcode-image');
+        qrcodeImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(upiUrl)}`;
+        
+        document.getElementById('add-money-form').style.display = 'none';
+        document.getElementById('qr-payment-section').style.display = 'block';
+    }
+
+    async function submitAddMoneyRequest() {
+        if (!currentUser || currentAddMoneyAmount <= 0) {
+            alert("An error occurred or no amount was specified.");
+            showAddMoneyPage();
+            return;
+        }
+
+        const addRequestId = db.ref('addMoneyRequests').push().key;
+        
+        const requestData = {
+            id: addRequestId,
+            username: currentUser,
+            amount: currentAddMoneyAmount,
+            upiId: '8447633950@ptyes',
+            status: 'pending',
+            timestamp: new Date().toISOString(),
+            type: 'add_money_request'
+        };
+
+        try {
+            await db.ref(`addMoneyRequests/${addRequestId}`).set(requestData);
+            
+            await db.ref(`users/${currentUser}/transactions/${addRequestId}`).set(requestData);
+
+            alert('Your add money request has been submitted for review. Your balance will be updated upon admin approval.');
+            showMyWalletScreen();
+        } catch (error) {
+            console.error("Error submitting add money request:", error);
+            alert("Failed to submit add money request. Please try again.");
+            document.getElementById('add-money-form').style.display = 'block';
+            document.getElementById('qr-payment-section').style.display = 'none';
+        }
+    }
+
+    function showWithdrawMoneyPage() {
+        if (!currentUser) { alert('Please log in.'); showScreen('login-container'); return; }
+        showScreen('withdraw-money-container');
+        document.getElementById('withdraw-form').reset();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+    });
+
+</script>
+</body>
+</html>
